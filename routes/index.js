@@ -15,6 +15,10 @@
   		console.log(req.query.abc);
    		res.render('success');
    	});
+   	app.get('/user',function (req,res){
+   		console.log('hahaha');
+   		res.json({name : 'wangyue',pw : 123});
+   	});
  };
  
  exports.posts =function(app){

@@ -1,6 +1,20 @@
-<form method="post" enctype="multipart/form-data" action="/file-upload">
-  <input type="text" name="username">
-  <input type="password" name="password">
-  <input type="file" name="thumbnail">
-  <input type="submit">
-</form>
+<!doctype html>
+<html lang="en" ng-app="lazy">
+<head>
+  <meta charset="utf-8">
+  <title>My HTML File</title>
+  <link rel="stylesheet" href="css/bootstrap.css">
+  <script src="js/angular/angular.js"></script>
+  <script src="js/controllers.js"></script>
+</head>
+<body>
+
+	<p>Nothing here {{'yet' + '!'}}</p>
+ 	<div class="span2" ng-controller="getUser">
+    	<p>username:{{user.name}}</p>
+    	<p>password:{{user.pw}}</p>
+    	<p>{{data}}</p>
+  	</div>
+
+</body>
+</html>
