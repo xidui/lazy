@@ -4,20 +4,23 @@
  */
  var fs = require('fs');
  var address='/Users/apple/Documents/github/lazy/upload/';
+ var my=require('../database/mysql_api.js');
  
  exports.gets = function(app) {
  	app.get('/', function (req, res) {
     	res.render('index', { title: 'Express' });
   	});
   	app.get('/success',function (req,res) {
-  		console.log(req.param('abc'));
-  		console.log(req.param('efg'));
-  		console.log(req.query.abc);
+//  		console.log(req.param('abc'));
+//  		console.log(req.param('efg'));
+//  		console.log(req.query.abc);
    		res.render('success');
    	});
    	app.get('/user',function (req,res){
    		console.log('hahaha');
-   		res.json({name : 'wangyue',pw : 123});
+   		//var data={name : 'wangyue',pw : 123};
+   		my.select(res);
+   		//res.json(data);
    	});
  };
  

@@ -7,15 +7,16 @@ var config={
   database : 'test',
 };
 
-exports.select = function () {
+exports.select = function (res) {
 	var connection = mysql.createConnection(config);
-	var res;
 	connection.connect();	
 	connection.query('SELECT * FROM user_info', function(err, result){   
-	    res=result;
-//	    res.forEach(function(user){  
-//	        console.log(user.id + ':' + user.username + ':' + user.pw);  
-//	    });
+	    result;
+	    result.forEach(function(user){  
+	    	if(user.id==1)
+	    		//console.log(user.id + ':' + user.username + ':' + user.pw);  
+	    		res.json({name : user.username,pw : user.pw});
+	    });
 	});
 	connection.end();
 };
