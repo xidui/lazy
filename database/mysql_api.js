@@ -1,23 +1,23 @@
 var mysql = require('mysql');
+var async = require('async');
 var config={
-  host     : 'localhost',
+  host     : '115.29.161.233',
   port     : '3306',
   user     : 'root',
-  password : '',
-  database : 'test',
+  password : 'xidui',
+  database : 'timemanage',
 };
 
-exports.select = function (res) {
+exports.select = function (query,data,res) {
 	var connection = mysql.createConnection(config);
-	connection.connect();	
-	connection.query('SELECT * FROM user_info', function(err, result){   
-	    result;
-	    result.forEach(function(user){  
-	    	if(user.id==1)
-	    		//console.log(user.id + ':' + user.username + ':' + user.pw);  
-	    		res.json({name : user.username,pw : user.pw});
-	    });
-	});
+	connection.connect();
+	connection.query(query,data,function(err,result) {
+		res.json(result);
+//		result.forEach(function(user){ 
+//			if(user.id==1) 
+//				res.json({name : user.username,pw : user.pw});
+//		});
+	});	
 	connection.end();
 };
 

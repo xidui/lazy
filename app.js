@@ -4,11 +4,10 @@
  */
 
 var express = require('express');
-var routes = require('./routes');
+var routes = require('./routes/route.js');
 var http = require('http');
 var path = require('path');
 var ejs = require('ejs');
-//var html = require('html');
 
 var app = express();
 

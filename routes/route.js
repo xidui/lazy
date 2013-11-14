@@ -17,10 +17,11 @@
    		res.render('success');
    	});
    	app.get('/user',function (req,res){
-   		console.log('hahaha');
-   		//var data={name : 'wangyue',pw : 123};
-   		my.select(res);
-   		//res.json(data);
+   		//my.select('SELECT * FROM user_info',null,res);
+   		res.json({name : 'xidui',pw : 123});
+   	});
+   	app.get('/items',function (req,res){
+   		my.select('SELECT * FROM items',null,res);
    	});
  };
  

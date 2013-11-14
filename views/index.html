@@ -15,6 +15,11 @@
     	<p>password:{{user.pw}}</p>
     	<p>{{data}}</p>
   	</div>
+  	<div class="span8" ng-controller="getItems">
+  		<select ng-model="Item">
+  			<option ng-repeat="item in items" value="{{item.name}}">{{item.name}}</option>
+  		</select>
+  	</div>
 
 </body>
 </html>
