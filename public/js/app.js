@@ -15,6 +15,12 @@ lazy.config(['$routeProvider',
       	when('/register', {
       		templateUrl: 'register'
       	}).
+      	when('/abc', {
+      		templateUrl: 'abc'
+      	}).
+      	when('/try', {
+      		templateUrl: 'try'
+      	}).
    		otherwise({redirectTo: '/welcome'});
 }]);
 

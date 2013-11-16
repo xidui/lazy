@@ -8,6 +8,25 @@ var config={
   database : 'timemanage',
 };
 
+exports.checklogin = function (req,res) {
+	var sql='select u.id,u.loginid from timemanage.users as u where loginid = ? and password = ?';
+	var data=[req.param('username'),req.param('password')];
+	var connection = mysql.createConnection(config);
+	connection.connect();
+	connection.query(sql,data,function (err,result) {
+		var user=result[0];
+		var response={state:false,id:'',loginid:''}
+		if(user!=null){
+			req.session={id:user.id,loginid:user.loginid};
+			response.state=true;
+			response.id=user.id;
+			response.loginid=user.loginid;
+		}
+		res.json(response);
+	});
+	connection.end();
+}
+
 exports.select = function (query,data,res) {
 	var connection = mysql.createConnection(config);
 	connection.connect();

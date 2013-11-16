@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" ng-app='lazy'>
 <head>
   	<meta charset="utf-8">
   	<title>My HTML File</title>
@@ -18,14 +18,14 @@
 <body>
 	<div class="navbar navbar-fixed-top">
 	  	<div class="navbar-inner">
-	    	<div class="container">
+	    	<div class="container" ng-controller="login">
 	      		<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"></a>
 	      		<a class="brand" href="#/welcome">Time Manage</a>
 	            <a class="btn btn-success pull-right" href="#/register">新用户注册</a>
-	        	<form action="/OnlineJudge/login" method="POST" class="form-inline pull-right" style="margin: 0">
-	          		<input type="text" class="input-small" placeholder="用户名" name="username" maxlength="80">
-	          		<input type="password" class="input-small" placeholder="密码" name="password" maxlength="80">
-	          		<input type="submit" class="btn btn-primary" name="action" value="登录">
+	        	<form action="" method="POST" ng-submit="send();" class="form-inline pull-right" style="margin: 0">
+	          		<input type="text" class="input-small" placeholder="用户名" name="username" ng-model="username" maxlength="80" required/>
+	          		<input type="password" class="input-small" placeholder="密码" name="password" ng-model="password" maxlength="80" required/>
+	          		<input type="submit" class="btn btn-primary" name="action" value="登录"/>
 	        	</form>
 	            <div class="nav-collapse">
 	        		<ul class="nav">
@@ -41,7 +41,7 @@
 	<h1 style='color: transparent;'>abc</h1>
 	<h1 style='color: transparent;'>abc</h1>
 	
-	<div class="view-container" ng-app='lazy'>
+	<div class="span6">
 	  	<div ng-view></div>
 	</div>
 

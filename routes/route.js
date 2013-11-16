@@ -15,23 +15,20 @@
    		res.render('success');
    	});
    	app.get('/manage',function (req,res){
-   		req.session=null;
-   		if(true)
+   		//console.log(req.session);
+   		if(!req.session.loginid)
    			res.render('partials/register');
    		else
    			res.render('partials/welcome');
    	});
    	app.get('/welcome',function (req,res){
-   		req.session={userid:1,username:'xidui'};
-   		console.log(req.session);
-   		res.render('partials/welcome',{session:req.session});
+   		res.render('partials/welcome');
    	});
    	app.get('/register',function (req,res){
-   		if(req.session!=null)
-   			console.log(req.session);
-   		else
-   			console.log('null');
    		res.render('partials/register');
+   	});
+   	app.get('/try',function (req,res){
+   		res.render('partials/try');
    	});
    	app.get('/abc',function (req,res){
    		res.render('partials/abc');
@@ -44,6 +41,9 @@
    	app.get('/data/items',function (req,res){
    		my.select('SELECT * FROM items',null,res);
    	});
+//   	app.get('/login', function(req, res) {
+//   		my.checklogin(req,res);
+//   	});
  };
  
  exports.posts =function(app){
@@ -62,5 +62,10 @@
  	         	res.send('File uploaded to: ' + target_path + ' - ' + req.files.thumbnail.size + ' bytes');
  	      	});
  	    });
- 	  });
+ 	});
+ 	app.post('/login', function(req, res) {
+ 		console.log(req.param('username'));
+ 		console.log(req.param('password'));
+ 		my.checklogin(req,res);
+ 	});
  }

@@ -16,7 +16,7 @@ app.engine('.html', ejs.__express);
 app.set('port', process.env.PORT || 3000);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'html');
-//app.use(express.bodyParser({uploadDir:'./uploads'}));
+
 app.use(express.bodyParser());
 app.use(express.cookieParser());
 app.use(express.cookieSession({ secret: "keyboard cat" }));
