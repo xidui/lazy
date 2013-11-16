@@ -7,20 +7,41 @@
  var my=require('../database/mysql_api.js');
  
  exports.gets = function(app) {
+ // get views
  	app.get('/', function (req, res) {
     	res.render('index', { title: 'Express' });
   	});
   	app.get('/success',function (req,res) {
-//  		console.log(req.param('abc'));
-//  		console.log(req.param('efg'));
-//  		console.log(req.query.abc);
    		res.render('success');
    	});
-   	app.get('/user',function (req,res){
-   		//my.select('SELECT * FROM user_info',null,res);
+   	app.get('/manage',function (req,res){
+   		req.session=null;
+   		if(true)
+   			res.render('partials/register');
+   		else
+   			res.render('partials/welcome');
+   	});
+   	app.get('/welcome',function (req,res){
+   		req.session={userid:1,username:'xidui'};
+   		console.log(req.session);
+   		res.render('partials/welcome',{session:req.session});
+   	});
+   	app.get('/register',function (req,res){
+   		if(req.session!=null)
+   			console.log(req.session);
+   		else
+   			console.log('null');
+   		res.render('partials/register');
+   	});
+   	app.get('/abc',function (req,res){
+   		res.render('partials/abc');
+   	});
+   	
+ //get json data
+   	app.get('/data/user',function (req,res){
    		res.json({name : 'xidui',pw : 123});
    	});
-   	app.get('/items',function (req,res){
+   	app.get('/data/items',function (req,res){
    		my.select('SELECT * FROM items',null,res);
    	});
  };

@@ -2,20 +2,20 @@
 
 /* Controllers */
 
-var lazy = angular.module('lazy', []);
+var lazyctrs = angular.module('lazyctrs', []);
 
-lazy.controller('getUser', function getUser($scope, $http) {
+lazyctrs.controller('getUser', function getUser($scope, $http) {
   	$http({
-  		url:'/user',
+  		url:'data/user',
   		method:'get'
   	}).success(function(data) {
     	$scope.user = data;
   	});
 });
 
-lazy.controller('getItems', function getItems($scope, $http) {
+lazyctrs.controller('getItems', function getItems($scope, $http) {
   	$http({
-  		url:'/items',
+  		url:'data/items',
   		method:'get'
   	}).success(function(data) {
     	$scope.items = data;

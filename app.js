@@ -18,6 +18,8 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'html');
 //app.use(express.bodyParser({uploadDir:'./uploads'}));
 app.use(express.bodyParser());
+app.use(express.cookieParser());
+app.use(express.cookieSession({ secret: "keyboard cat" }));
 app.use(express.favicon());
 app.use(express.logger('dev'));
 app.use(express.json());

@@ -1,0 +1,14 @@
+<div class="container">
+	<div class="row">
+		<div class="span2" ng-controller="getUser">
+			<p>username:{{user.name}}</p>
+			<p>password:{{user.pw}}</p>
+			<p>{{data}}</p>
+		</div>
+		<div class="span8" ng-controller="getItems">
+			<select ng-model="Item">
+				<option ng-repeat="item in items" value="{{item.name}}">{{item.name}}</option>
+			</select>
+		</div>
+	</div>	
+</div>
