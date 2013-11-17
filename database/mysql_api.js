@@ -40,15 +40,6 @@ exports.select = function (query,data,res) {
 	connection.end();
 };
 
-exports.update = function (){
-	var connection = mysql.createConnection(config);
-	connection.connect();
-	var data = ['quer', 20];  
-	connection.query('UPDATE user_info SET pw = ? WHERE id = ?', data, function(err, result) {  
-	}); 
-	connection.end();
-}
-
 exports.checkusername = function (req,res) {
 	var sql='select u.id from timemanage.users as u where loginid = ?';
 	var data=[req.param('username')];
@@ -66,26 +57,37 @@ exports.checkusername = function (req,res) {
 	});
 	connection.end();
 }
-//var pool  = mysql.createPool({  
-//  host     : 'localhost',  
-//  port     : '3306',
-//  user     : 'root',  
-//  password : '',  
-//  database : 'test',  
-//  debug    : false,  
-//});  
-//
-//var select = function(connection){  
-//    connection.query('SELECT * FROM user_info', function(err, result){  
-//        result.forEach(function(user){  
-//            console.log(user.id + ':' + user.username + ':' + user.pw);  
-//        });  
-//    });  
-//}; 
-//
-//pool.getConnection(function(err, connection) {  
-//    select(connection);  
-//    //update(connection);  
-//    //select(connection);  
-//    pool.releaseConnection(connection);
-//}); 
+
+exports.register = function (req,res) {
+	var sql='insert into timemanage.users(loginid,password,email,gender,school,phone,qq,grade) values(?,?,?,?,?,?,?,?)';
+	var data=[
+		req.param('username'),
+		req.param('password1'),
+		req.param('email'),
+		req.param('gender')=='male',
+		req.param('school'),
+		req.param('phone'),
+		req.param('qq'),
+		req.param('grade')
+	];
+	var connection = mysql.createConnection(config);
+	connection.connect();
+	connection.query(sql,data,function (err,result) {
+		var response={state:false}
+		console.log(result);
+		console.log(err);
+		if(result!=null)
+			response.state=true;
+		res.json(response);
+	});
+	connection.end();
+}
+
+exports.update = function (){
+	var connection = mysql.createConnection(config);
+	connection.connect();
+	var data = ['quer', 20];  
+	connection.query('UPDATE user_info SET pw = ? WHERE id = ?', data, function(err, result) {  
+	}); 
+	connection.end();
+}

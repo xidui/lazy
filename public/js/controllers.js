@@ -60,7 +60,10 @@ lazyctrs.controller('register', function login($scope, $http) {
 				qq			:	$scope.qq
 			}
 		}).success(function(data) {
-			alert(data.state);
+			var s='恭喜注册成功';
+			if(!data.state)
+				s='抱歉注册失败';
+			alert(s);
 		});
 	}
 	$scope.checkusername=function() {

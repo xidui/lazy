@@ -68,9 +68,7 @@
  		my.checklogin(req,res);
  	});
  	app.post('/register', function(req, res) {
- 		console.log(req.body.username);
- 		console.log(req.param('username'));
- 		res.json({state:false});
+ 		my.register(req,res);
  	});
  	app.post('/checkusername', function(req, res) {
  		my.checkusername(req,res);
