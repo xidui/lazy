@@ -48,6 +48,24 @@ exports.update = function (){
 	}); 
 	connection.end();
 }
+
+exports.checkusername = function (req,res) {
+	var sql='select u.id from timemanage.users as u where loginid = ?';
+	var data=[req.param('username')];
+	var connection = mysql.createConnection(config);
+	connection.connect();
+	connection.query(sql,data,function (err,result) {
+		var user=result[0];
+		var response={state:true}
+		if(user!=null){
+			response.state=false;
+		}
+		if(req.param('username')==null)
+			response.state=false;
+		res.json(response);
+	});
+	connection.end();
+}
 //var pool  = mysql.createPool({  
 //  host     : 'localhost',  
 //  port     : '3306',

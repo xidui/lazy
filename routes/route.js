@@ -14,23 +14,22 @@
   	app.get('/success',function (req,res) {
    		res.render('success');
    	});
-   	app.get('/manage',function (req,res){
-   		//console.log(req.session);
+   	app.get('/view/manage',function (req,res){
    		if(!req.session.loginid)
    			res.render('partials/register');
    		else
    			res.render('partials/welcome');
    	});
-   	app.get('/welcome',function (req,res){
+   	app.get('/view/welcome',function (req,res){
    		res.render('partials/welcome');
    	});
-   	app.get('/register',function (req,res){
+   	app.get('/view/register',function (req,res){
    		res.render('partials/register');
    	});
-   	app.get('/try',function (req,res){
+   	app.get('/view/try',function (req,res){
    		res.render('partials/try');
    	});
-   	app.get('/abc',function (req,res){
+   	app.get('/view/abc',function (req,res){
    		res.render('partials/abc');
    	});
    	
@@ -67,5 +66,13 @@
  		console.log(req.param('username'));
  		console.log(req.param('password'));
  		my.checklogin(req,res);
+ 	});
+ 	app.post('/register', function(req, res) {
+ 		console.log(req.body.username);
+ 		console.log(req.param('username'));
+ 		res.json({state:false});
+ 	});
+ 	app.post('/checkusername', function(req, res) {
+ 		my.checkusername(req,res);
  	});
  }

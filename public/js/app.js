@@ -6,22 +6,22 @@ var lazy = angular.module('lazy', [
 lazy.config(['$routeProvider',
   	function($routeProvider) {
     	$routeProvider.
-      	when('/manage', {
-        	templateUrl: 'manage'
+      	when('/view/manage', {
+        	templateUrl: '/view/manage'
       	}).
-      	when('/welcome', {
-      		templateUrl: 'welcome'
+      	when('/view/welcome', {
+      		templateUrl: '/view/welcome'
       	}).
-      	when('/register', {
-      		templateUrl: 'register'
+      	when('/view/register', {
+      		templateUrl: '/view/register'
       	}).
-      	when('/abc', {
-      		templateUrl: 'abc'
+      	when('/view/abc', {
+      		templateUrl: '/view/abc'
       	}).
-      	when('/try', {
-      		templateUrl: 'try'
+      	when('/view/try', {
+      		templateUrl: '/view/try'
       	}).
-   		otherwise({redirectTo: '/welcome'});
+   		otherwise({redirectTo: '/view/welcome'});
 }]);
 
 //var abc = angular.module('abc',[
