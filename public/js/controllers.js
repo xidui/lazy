@@ -14,13 +14,23 @@ lazyctrs.controller('getUser', function getUser($scope, $http) {
 });
 
 lazyctrs.controller('getItems', function getItems($scope, $http) {
-alert($http);
   	$http({
   		url:'data/items',
   		method:'get'
   	}).success(function(data) {
-    	$scope.items = data;
+  	    $scope.items = data.result;
   	});
+  	$scope.getsand=function(sand) {
+  		$http({
+  			url:'/data/sands',
+  			method:'post',
+  			data:{
+  				sand	:	sand
+  			}
+  		}).success(function(data) {
+  			$scope.sands=data.result;
+  		});
+  	}
 });
 
 lazyctrs.controller('login', function login($scope, $http) {
@@ -33,7 +43,11 @@ lazyctrs.controller('login', function login($scope, $http) {
 				password	:	$scope.password
 			}
 		}).success(function(data) {
-			alert(data.state);
+			if(data.state){
+				location="#/view/manage";
+			}else {
+				alert("用户名或密码错误！");
+			}
 		});
 	}
 });

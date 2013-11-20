@@ -23,15 +23,3 @@ lazy.config(['$routeProvider',
       	}).
    		otherwise({redirectTo: '/view/welcome'});
 }]);
-
-//var abc = angular.module('abc',[
-//	'ngRoute'
-//]);
-//abc.config(['$routeProvider',
-//  	function($routeProvider) {
-//    	$routeProvider.
-//      	when('/abc', {
-//        	templateUrl: 'abc'
-//      	}).
-//   		otherwise({redirectTo: '/abc'});
-//}]);

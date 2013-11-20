@@ -32,10 +32,6 @@ exports.select = function (query,data,res) {
 	connection.connect();
 	connection.query(query,data,function(err,result) {
 		res.json(result);
-//		result.forEach(function(user){ 
-//			if(user.id==1) 
-//				res.json({name : user.username,pw : user.pw});
-//		});
 	});	
 	connection.end();
 };
@@ -73,7 +69,7 @@ exports.register = function (req,res) {
 	var connection = mysql.createConnection(config);
 	connection.connect();
 	connection.query(sql,data,function (err,result) {
-		var response={state:false}
+		var response={state:false};
 		console.log(result);
 		console.log(err);
 		if(result!=null)
@@ -89,5 +85,38 @@ exports.update = function (){
 	var data = ['quer', 20];  
 	connection.query('UPDATE user_info SET pw = ? WHERE id = ?', data, function(err, result) {  
 	}); 
+	connection.end();
+}
+
+exports.getitems = function (req,res){
+	var sql="select it.iditems,it.name,sum(s.time) as sum from timemanage.sands as s,timemanage.items as it where it.iditems=s.item and it.user=? group by s.item;";
+	var connection = mysql.createConnection(config);
+	var data=[req.session.id];
+	connection.connect();
+	connection.query(sql,data,function (err,result) {
+		var response={state:false,result:result};
+		console.log(result);
+		console.log(err);
+		if(result!=null)
+			response.state=true;
+		res.json(response);
+	});
+	connection.end();
+}
+
+exports.getsands = function (req,res) {
+	var sql="select * from timemanage.sands as s,timemanage.items as it where it.iditems=s.item and it.user=? and it.name=?";
+	var connection = mysql.createConnection(config);
+	var data=[req.session.id,req.param('sand')];
+	console.log(data);
+	connection.connect();
+	connection.query(sql,data,function (err,result) {
+		var response={state:false,result:result};
+		console.log(result);
+		console.log(err);
+		if(result!=null)
+			response.state=true;
+		res.json(response);
+	});
 	connection.end();
 }

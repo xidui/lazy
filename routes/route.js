@@ -18,7 +18,7 @@
    		if(!req.session.loginid)
    			res.render('partials/register');
    		else
-   			res.render('partials/welcome');
+   			res.render('partials/manage');
    	});
    	app.get('/view/welcome',function (req,res){
    		res.render('partials/welcome');
@@ -35,14 +35,18 @@
    	
  //get json data
    	app.get('/data/user',function (req,res){
-   		res.json({name : 'xidui',pw : 123});
+   		if(!req.session.loginid)
+   			res.render('partials/welcome');
+   		res.json({name : req.session.loginid});
    	});
    	app.get('/data/items',function (req,res){
-   		my.select('SELECT * FROM items',null,res);
+   		my.getitems(req,res);
    	});
-//   	app.get('/login', function(req, res) {
-//   		my.checklogin(req,res);
-//   	});
+   	
+ //where to put this function? looks like post but get
+   	app.post('/data/sands',function (req,res){
+   		my.getsands(req,res);
+   	});
  };
  
  exports.posts =function(app){
