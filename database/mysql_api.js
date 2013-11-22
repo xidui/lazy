@@ -89,7 +89,7 @@ exports.update = function (){
 }
 
 exports.getitems = function (req,res){
-	var sql="select it.iditems,it.name,sum(s.time) as sum from timemanage.sands as s,timemanage.items as it where it.iditems=s.item and it.user=? group by s.item;";
+	var sql="select it.iditems,it.name,sum(s.time) as sum from timemanage.items as it left join timemanage.sands as s on it.iditems=s.item and it.user=? group by it.iditems;";
 	var connection = mysql.createConnection(config);
 	var data=[req.session.id];
 	connection.connect();

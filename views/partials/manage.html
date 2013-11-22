@@ -2,31 +2,43 @@
 	<h1 ng-controller="getUser">Hello {{user.name}}</h1>
 	<div class="row" ng-controller="getItems">
 		<div class="span4">
-			<table>
-				<tr>
-					<td>name</td>
-					<td>sum</td>
-				</tr>
+			<table class="table table-striped">
+				<th>
+					<tr>
+						<td>name</td>
+						<td>sum</td>
+						<td><button class="btn btn-success" ng-click="">增加</button></td>
+					</tr>
+				</th>
 				<tr ng-repeat="item in items" >
-					<td>{{item.name}}</td>
-					<td>{{item.sum}}</td>
-					<td><button ng-click="getsand('{{item.name}}')">{{item.name}}</button></td>
+					<td class="span2">{{item.name}}</td>
+					<td class="span2">{{item.sum}}</td>
+					<td class="span3">
+						<div class="btn-group">
+						  	<button class="btn">Options</button>
+						  	<button class="btn dropdown-toggle" data-toggle="dropdown">
+						    <span class="caret"></span>
+						  	</button>
+						  	<ul class="dropdown-menu">
+						    	<li><a tabindex="-1" ng-click="getsand('{{item.name}}')">View details</a></li>
+						    	<li class="divider"></li>
+						    	<li><a tabindex="-1" href="">Modify item</a></li>
+						  	</ul>
+						</div>
+					</td>
 				</tr>
 			</table>
 		</div>
 		<div class="span6">
-			<table>
-				<tr>
-					<td>name</td>
-					<td>time(hour)</td>
-					<td>datatime</td>
-					<td>comments</td>
-				</tr>
+			<table class="table table-bordered table-striped table-condensed">
+				<th>
+					<tr><td>name</td><td>time(hour)</td><td>datatime</td><td>comments</td></tr>
+				</th>
 				<tr ng-repeat="sand in sands" >
-					<td>{{sand.name}}</td>
-					<td>{{sand.time}}</td>
-					<td>{{sand.datetime}}</td>
-					<td>{{sand.comments}}</td>
+					<td class="span1">{{sand.name}}</td>
+					<td class="span1">{{sand.time}}</td>
+					<td class="span2">{{sand.datetime|date:'yyyy-MM-dd HH:mm:ss'}}</td>
+					<td style="text-align: left;">{{sand.comments}}</td>
 				</tr>
 			</table>
 		</div>

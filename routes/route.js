@@ -42,7 +42,19 @@
    	app.get('/data/items',function (req,res){
    		my.getitems(req,res);
    	});
-   	
+   	app.get('/getloginstate',function (req,res){
+   		var response={
+   			state	:	false,
+   			loginid	:	''	
+   		};
+   		if(req.session.loginid){
+   			response.state=true;
+   			response.loginid=req.session.loginid;
+   		}
+   		console.log(response);
+   		res.json(response);	
+   	});
+
  //where to put this function? looks like post but get
    	app.post('/data/sands',function (req,res){
    		my.getsands(req,res);
