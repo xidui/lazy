@@ -20,29 +20,87 @@ lazyctrs.controller('getItems', function getItems($scope, $http) {
   	}).success(function(data) {
   	    $scope.items = data.result;
   	});
-  	$scope.getsand=function(sand) {
+  	$scope.getsand=function(item) {
   		$http({
   			url:'/data/sands',
   			method:'post',
   			data:{
-  				sand	:	sand
+  				sand	:	item
   			}
   		}).success(function(data) {
+  			$scope.viewdetail_hide=false;
   			$scope.sands=data.result;
+  			$scope.itemname=item;
   		});
-  	}
+  	};
+  	$scope.closedetail=function(){
+  		$scope.viewdetail_hide=true;
+  	};
+  	$scope.addnewitem=function(){
+  		$scope.addnewitem_hide=!$scope.addnewitem_hide;
+  		if($scope.newitemname==null)return;
+  		$http({
+  			url:'/add/additem',
+  			method:'post',
+  			data:{
+  				newitemname	:	$scope.newitemname
+  			}
+  		}).success(function(data) {
+  			$scope.addnewitem_hide=true;
+  			if(data.state){
+  				$scope.items.push({ 
+  					iditems: data.result.insertId, 
+  					name: $scope.newitemname, 
+  					sum: null, 
+  					user: data.loginid 
+  				});
+  			};
+  			$scope.newitemname=null;
+  		});
+  	};
+  	$scope.addsand=function(){
+  		$scope.addnewsand_hide=!$scope.addnewsand_hide;
+  		if($scope.comment==null)return;
+  		$http({
+  			url:'/add/addsand',
+  			method:'post',
+  			data:{
+  				itemname	:	$scope.itemname,
+  				timespend	:	$scope.timespend,
+  				comment		:	$scope.comment
+  			}
+  		}).success(function(data) {
+  			if(data.state){
+  				$scope.sands.push({ 
+  					idsands: null,
+  				    time: $scope.timespend,
+  				    datetime: data.systime,
+  				    item: data.iditems,
+  				    comments: $scope.comment,
+  				    iduser: data.id,
+  				    iditems: data.iditems,
+  				    name: $scope.itemname,
+  				    user: data.id
+  				});
+  			}
+  			$scope.timespend=null;
+  			$scope.comment=null;
+  		});	
+  	};
+  	$scope.viewdetail_hide=true;
+  	$scope.addnewitem_hide=true;
+  	$scope.addnewsand_hide=true;
 });
 
 lazyctrs.controller('login', function login($scope, $http) {
 	function checkloginstate($http){
-		var res='';
 		$http({
 			url:'/getloginstate',
 			method:'get'
 		}).success(function(data) {
-		    res=data;
 		    if(data.state)
 		    	$scope.loginstate='yes';
+		    $scope.loginid=data.loginid;
 		});
 	};
 	checkloginstate($http);
@@ -58,9 +116,21 @@ lazyctrs.controller('login', function login($scope, $http) {
 			if(data.state){
 				location="#/view/manage";
 				$scope.loginstate='yes';
+				$scope.loginid=data.loginid;
 			}else {
 				alert("用户名或密码错误！");
 			}
+		});
+	}
+	$scope.logout=function() {
+		$http({
+			url:'/logout',
+			method:'post'
+		}).success(function(data) {
+		    if(data.state){
+		    	$scope.loginstate='no';
+		    	location="#/view/welcome";
+		    }
 		});
 	}
 	$scope.loginstate='no';

@@ -81,12 +81,25 @@
  	app.post('/login', function(req, res) {
  		console.log(req.param('username'));
  		console.log(req.param('password'));
- 		my.checklogin(req,res);
+ 		my.login(req,res);
+ 	});
+ 	app.post('/logout', function(req, res) {
+ 		req.session=null;
+ 		var response={state:true,id:'',loginid:''};
+ 		res.json(response);
  	});
  	app.post('/register', function(req, res) {
  		my.register(req,res);
  	});
  	app.post('/checkusername', function(req, res) {
  		my.checkusername(req,res);
+ 	});
+ 	
+ 	//the operations accociating with db update and insert and delete
+ 	app.post('/add/additem',function(req,res){
+ 		my.additem(req,res);
+ 	});
+ 	app.post('/add/addsand',function(req,res){
+ 		my.addsand(req,res);
  	});
  }

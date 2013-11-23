@@ -8,14 +8,14 @@ var config={
   database : 'timemanage',
 };
 
-exports.checklogin = function (req,res) {
+exports.login = function (req,res) {
 	var sql='select u.id,u.loginid from timemanage.users as u where loginid = ? and password = ?';
 	var data=[req.param('username'),req.param('password')];
 	var connection = mysql.createConnection(config);
 	connection.connect();
 	connection.query(sql,data,function (err,result) {
 		var user=result[0];
-		var response={state:false,id:'',loginid:''}
+		var response={state:false,id:'',loginid:''};
 		if(user!=null){
 			req.session={id:user.id,loginid:user.loginid};
 			response.state=true;
@@ -79,17 +79,8 @@ exports.register = function (req,res) {
 	connection.end();
 }
 
-exports.update = function (){
-	var connection = mysql.createConnection(config);
-	connection.connect();
-	var data = ['quer', 20];  
-	connection.query('UPDATE user_info SET pw = ? WHERE id = ?', data, function(err, result) {  
-	}); 
-	connection.end();
-}
-
 exports.getitems = function (req,res){
-	var sql="select it.iditems,it.name,sum(s.time) as sum from timemanage.items as it left join timemanage.sands as s on it.iditems=s.item and it.user=? group by it.iditems;";
+	var sql="select it.iditems,it.name,sum(s.time) as sum,it.user from timemanage.items as it left join timemanage.sands as s on it.iditems=s.item where it.user=? group by it.iditems;";
 	var connection = mysql.createConnection(config);
 	var data=[req.session.id];
 	connection.connect();
@@ -117,6 +108,64 @@ exports.getsands = function (req,res) {
 		if(result!=null)
 			response.state=true;
 		res.json(response);
+	});
+	connection.end();
+}
+
+exports.additem = function (req,res) {
+	var sql="insert into timemanage.items(name,user) values(?,?)";
+	var connection = mysql.createConnection(config);
+	var data=[req.param('newitemname'),req.session.id];
+	console.log(data);
+	connection.connect();
+	connection.query(sql,data,function (err,result) {
+		var response={state:false,result:result,id:req.session.id,loginid:req.session.loginid};
+		console.log(result);
+		console.log(err);
+		if(result!=null)
+			response.state=true;
+		console.log(response);
+		res.json(response);
+	});
+	connection.end();
+}
+
+exports.addsand = function (req,res) {
+	//find the itemid with itemname first
+	var connection = mysql.createConnection(config);
+	connection.connect();
+	connection.query("select it.iditems from timemanage.items as it where it.name=?",[req.param('itemname')],function (err,result) {
+		var iditems=result[0].iditems;
+		console.log(iditems);
+		var sql="insert into timemanage.sands(time,datetime,item,comments,iduser) values(?,?,?,?,?)";
+		var d=new Date();
+		var systime=d.getFullYear()+'-'+d.getMonth()+'-'+d.getDate()+' '+d.getHours()+':'+d.getMinutes()+':'+d.getSeconds();
+		var data=[
+			req.param('timespend'),
+			systime,
+			result[0].iditems,
+			req.param('comment'),
+			req.session.id
+		];
+		var connection2 = mysql.createConnection(config);
+		connection2.connect();
+		connection2.query(sql,data,function(err,result) {
+			var response={
+				state:false,
+				id:req.session.id,
+				loginid:req.session.loginid,
+				systime:systime,
+				iditem:iditems,
+				result:result
+			};
+			console.log(result);
+			console.log(err);
+			if(result!=null)
+				response.state=true;
+			console.log(response);
+			res.json(response);
+		});
+		connection2.end();
 	});
 	connection.end();
 }
