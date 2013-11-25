@@ -14,12 +14,21 @@ lazyctrs.controller('getUser', function getUser($scope, $http) {
 });
 
 lazyctrs.controller('getItems', function getItems($scope, $http) {
-  	$http({
-  		url:'/data/items',
-  		method:'get'
-  	}).success(function(data) {
-  	    $scope.items = data.result;
-  	});
+	getItems(0);
+	function getItems(all) {
+		$http({
+			url:'/data/items',
+			method:'post',
+			data:{
+				showall	:	all
+			}
+		}).success(function(data) {
+		    $scope.items = data.result;
+		});
+	};
+	$scope.getItemsAll =function() {
+		getItems(1);
+	};
   	$scope.getsand=function(item) {
   		$http({
   			url:'/data/sands',
@@ -87,6 +96,24 @@ lazyctrs.controller('getItems', function getItems($scope, $http) {
   			$scope.comment=null;
   		});	
   	};
+  	$scope.hideitem=function(item){
+  		$http({
+  			url:'/modi/hideitem',
+  			method:'post',
+  			data:{
+  				item	:	item
+  			}
+  		}).success(function(data) {
+  			if(data.state){
+  				var i=0;
+  				$scope.items.forEach(function (e) {
+  					if(e['name']==item)
+  						$scope.items.splice(i, 1);
+  					i++;
+  				});
+  			}
+  		});
+  	}
   	$scope.viewdetail_hide=true;
   	$scope.addnewitem_hide=true;
   	$scope.addnewsand_hide=true;

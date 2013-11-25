@@ -39,9 +39,6 @@
    			res.render('partials/welcome');
    		res.json({name : req.session.loginid});
    	});
-   	app.get('/data/items',function (req,res){
-   		my.getitems(req,res);
-   	});
    	app.get('/getloginstate',function (req,res){
    		var response={
    			state	:	false,
@@ -94,6 +91,9 @@
  	app.post('/checkusername', function(req, res) {
  		my.checkusername(req,res);
  	});
+ 	app.post('/data/items',function (req,res){
+ 		my.getitems(req,res);
+ 	});
  	
  	//the operations accociating with db update and insert and delete
  	app.post('/add/additem',function(req,res){
@@ -101,5 +101,8 @@
  	});
  	app.post('/add/addsand',function(req,res){
  		my.addsand(req,res);
+ 	});
+ 	app.post('/modi/hideitem',function(req,res){
+ 		my.hideitem(req,res);
  	});
  }

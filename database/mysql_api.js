@@ -80,9 +80,10 @@ exports.register = function (req,res) {
 }
 
 exports.getitems = function (req,res){
-	var sql="select it.iditems,it.name,sum(s.time) as sum,it.user from timemanage.items as it left join timemanage.sands as s on it.iditems=s.item where it.user=? group by it.iditems;";
+	var sql="select it.iditems,it.name,sum(s.time) as sum,it.user from timemanage.items as it left join timemanage.sands as s on it.iditems=s.item where it.user=? and it.show>? group by it.iditems;";
 	var connection = mysql.createConnection(config);
-	var data=[req.session.id];
+	console.log(req.param('showall'));
+	var data=[req.session.id,req.param('showall')*-1];
 	connection.connect();
 	connection.query(sql,data,function (err,result) {
 		var response={state:false,result:result};
@@ -166,6 +167,25 @@ exports.addsand = function (req,res) {
 			res.json(response);
 		});
 		connection2.end();
+	});
+	connection.end();
+}
+
+exports.hideitem = function (req,res) {
+	var connection = mysql.createConnection(config);
+	connection.connect();
+	connection.query('UPDATE timemanage.items as it SET it.show=0 WHERE it.user=? and it.name=?',[req.session.id,req.param('item')],function (err,result){
+		var response = {
+			state 	:	false,
+			id		:	req.session.id,
+			loginid	:	req.session.loginid,
+			result	:	result
+		};
+		console.log(result);
+		console.log(err);
+		if(result!=null)
+			response.state=true;
+		res.json(response);
 	});
 	connection.end();
 }
