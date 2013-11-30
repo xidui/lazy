@@ -174,7 +174,7 @@ exports.addsand = function (req,res) {
 exports.hideitem = function (req,res) {
 	var connection = mysql.createConnection(config);
 	connection.connect();
-	connection.query('UPDATE timemanage.items as it SET it.show=0 WHERE it.user=? and it.name=?',[req.session.id,req.param('item')],function (err,result){
+	connection.query('UPDATE timemanage.items as it SET it.show=? WHERE it.user=? and it.name=?',[req.param('del'),req.session.id,req.param('item')],function (err,result){
 		var response = {
 			state 	:	false,
 			id		:	req.session.id,

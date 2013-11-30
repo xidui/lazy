@@ -1,7 +1,7 @@
 <div class="container">
 	<h1 ng-controller="getUser">Hello {{user.name}}</h1>
 	<p style="height: 10px;"></p>
-	<div class="row" ng-controller="getItems">
+	<div class="row" ng-controller="Items">
 		<div class="span4">
 			<table class="table table-striped">
 				<th>
@@ -35,14 +35,11 @@
 					<td class="span2">{{item.sum==null?0:item.sum}}</td>
 					<td class="span3">
 						<div class="btn-group">
-						  	<button class="btn dropdown-toggle" data-toggle="dropdown">Options
-						    <span class="caret"></span>
-						  	</button>
+						  	<button class="btn" ng-click="getsand('{{item.name}}')">Details</button>
+						  	<button class="btn dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></button>
 						  	<ul class="dropdown-menu pull-right">
-						    	<li><a tabindex="-1" ng-click="getsand('{{item.name}}')">View details</a></li>
-						    	<li class="divider"></li>
-						    	<li class="disabled"><a tabindex="-1" href="">Modify item</a></li>
-						    	<li><a ng-click="hideitem('{{item.name}}')">Hide this item</a></li>
+						    	<li><a ng-click="hideitem('{{item.name}}',-1)">Delete item</a></li>
+						    	<li><a ng-click="hideitem('{{item.name}}',0)">Hide item</a></li>
 						  	</ul>
 						</div>
 					</td>
