@@ -15,6 +15,9 @@ lazy.config(['$routeProvider',
       	when('/view/register', {
       		templateUrl: '/view/register'
       	}).
+      	when('/view/task', {
+      		templateUrl: '/view/task'
+      	}).
       	when('/view/abc', {
       		templateUrl: '/view/abc'
       	}).

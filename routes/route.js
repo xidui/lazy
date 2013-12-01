@@ -11,9 +11,6 @@
  	app.get('/', function (req, res) {
     	res.render('index', { title: 'Express' });
   	});
-  	app.get('/success',function (req,res) {
-   		res.render('success');
-   	});
    	app.get('/view/manage',function (req,res){
    		if(!req.session.loginid)
    			res.render('partials/register');
@@ -25,6 +22,12 @@
    	});
    	app.get('/view/register',function (req,res){
    		res.render('partials/register');
+   	});
+   	app.get('/view/task',function (req,res) {
+   		if(!req.session.loginid)
+   			res.render('partials/register');
+   		else
+   			res.render('partials/task');
    	});
    	app.get('/view/try',function (req,res){
    		res.render('partials/try');

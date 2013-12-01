@@ -140,7 +140,7 @@ exports.addsand = function (req,res) {
 		console.log(iditems);
 		var sql="insert into timemanage.sands(time,datetime,item,comments,iduser) values(?,?,?,?,?)";
 		var d=new Date();
-		var systime=d.getFullYear()+'-'+d.getMonth()+'-'+d.getDate()+' '+d.getHours()+':'+d.getMinutes()+':'+d.getSeconds();
+		var systime=d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate()+' '+d.getHours()+':'+d.getMinutes()+':'+d.getSeconds();
 		var data=[
 			req.param('timespend'),
 			systime,
