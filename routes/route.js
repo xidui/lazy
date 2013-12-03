@@ -54,11 +54,6 @@
    		console.log(response);
    		res.json(response);	
    	});
-
- //where to put this function? looks like post but get
-   	app.post('/data/sands',function (req,res){
-   		my.getsands(req,res);
-   	});
  };
  
  exports.posts =function(app){
@@ -97,6 +92,12 @@
  	app.post('/data/items',function (req,res){
  		my.getitems(req,res);
  	});
+ 	app.post('/data/sands',function (req,res){
+ 		my.getsands(req,res);
+ 	});
+ 	app.post('/data/tasks',function (req,res) {
+ 		my.getTasks(req,res);
+ 	});
  	
  	//the operations accociating with db update and insert and delete
  	app.post('/add/additem',function(req,res){
@@ -104,6 +105,9 @@
  	});
  	app.post('/add/addsand',function(req,res){
  		my.addsand(req,res);
+ 	});
+ 	app.post('/add/addTask',function(req,res){
+ 		my.addTask(req,res);
  	});
  	app.post('/modi/hideitem',function(req,res){
  		my.hideitem(req,res);

@@ -5,67 +5,70 @@
 		</div>
 		<form action="" method="POST" ng-submit="send();" class="form-horizontal">
   			<fieldset>
-    			<div class="control-group">
-      				<label class="control-label" for="username">用户名 (必填)</label>
-      				<div class="controls">
-        				<input type="text" class="input-xlarge" ng-model="username" name="username" placeholder="用户名">
-        				<input type="button" class="btn btn-warning" ng-click="checkusername();" value="检查用户名" required/>
+    			<div class="form-group">
+      				<label class="col-sm-2 control-label" for="username">用户名 (必填)</label>
+      				<div class="col-sm-4">
+        				<input type="text" class="form-control input-xlarge" ng-model="username" name="username" placeholder="用户名">
+      				</div>
+      				<div class="col-sm-4">
+      					<input type="button" class="btn btn-warning" ng-click="checkusername();" value="检查用户名" required/>
       				</div>
     			</div>
-    			<div class="control-group">
-      				<label class="control-label" for="password1">密码 (必填)</label>
-      				<div class="controls">
-        				<input type="password" class="input-xlarge" ng-model="password1" name="password1" placeholder="密码">
+    			<div class="form-group">
+      				<label class="col-sm-2 control-label" for="password1">密码 (必填)</label>
+      				<div class="col-sm-4">
+        				<input type="password" class="form-control input-xlarge" ng-model="password1" name="password1" placeholder="密码">
       				</div>
-      				<!--<p>{{password1}}</p>-->
     			</div>
-    			<div class="control-group">
-      				<label class="control-label" for="realname">密码确认 (必填)</label>
-      				<div class="controls">
-        				<input type="password" class="input-xlarge" ng-model="password2" name="password2" placeholder="确认">
+    			<div class="form-group">
+      				<label class="col-sm-2 control-label" for="realname">密码确认 (必填)</label>
+      				<div class="col-sm-4">
+        				<input type="password" class="form-control input-xlarge" ng-model="password2" name="password2" placeholder="确认">
         				<p style="color: orange;">{{password1!=password2?"两次密码不一致":""}}</p>
       				</div>	
     			</div>
-    			<div class="control-group">
-    				<label class="control-label" for="major">邮箱 (选填)</label>
-    				<div class="controls">
-    					<input type="email" class="input-xlarge" ng-model="email" name="email" placeholder="邮箱">
+    			<div class="form-group">
+    				<label class="col-sm-2 control-label" for="major">邮箱 (选填)</label>
+    				<div class="col-sm-4">
+    					<input type="email" class="form-control input-xlarge" ng-model="email" name="email" placeholder="邮箱">
     				</div>
     			</div>
-    			<div class="control-group">
-      				<label class="control-label">性别 (选填)</label>
-      				<div class="controls">
+    			<div class="form-group">
+      				<label class="col-sm-2 control-label">性别 (选填)</label>
+      				<div class="col-sm-4">
         				<label style="display:inline"><input type="radio" name="gender" ng-model="gender" value="male"> 男</label>
         				<label style="display:inline"><input type="radio" name="gender" ng-model="gender" value="female"> 女</label>
       				</div>
       				<!--<p>{{gender}}</p>-->
     			</div>
-    			<div class="control-group">
-      				<label class="control-label" for="school">学校 (选填)</label>
-      				<div class="controls">
-        				<input type="text" class="input-xlarge" ng-model="school" name="school" placeholder="学校">
+    			<div class="form-group">
+      				<label class="col-sm-2 control-label" for="school">学校 (选填)</label>
+      				<div class="col-sm-4">
+        				<input type="text" class="form-control input-xlarge" ng-model="school" name="school" placeholder="学校">
       				</div>
     			</div>
-    			<div class="control-group">
-      				<label class="control-label" for="grade">年级 (选填)</label>
-      					<div class="controls">
-        					<input type="number" class="input-small" ng-model="grade" name="grade">
+    			<div class="form-group">
+      				<label class="col-sm-2 control-label" for="grade">年级 (选填)</label>
+      					<div class="col-sm-3">
+        					<input type="number" class="form-control input-small" ng-model="grade" name="grade">
       					</div>
     			</div>
-    			<div class="control-group">
-      				<label class="control-label" for="phone">手机 (选填)</label>
-      					<div class="controls">
-        					<input type="text" class="input-medium" ng-model="phone" name="phone" placeholder="手机">
+    			<div class="form-group">
+      				<label class="col-sm-2 control-label" for="phone">手机 (选填)</label>
+      					<div class="col-sm-3">
+        					<input type="text" class="form-control input-medium" ng-model="phone" name="phone" placeholder="手机">
       					</div>
     			</div>
-    			<div class="control-group">
-      				<label class="control-label" for="qq">QQ(选填)</label>
-      				<div class="controls">
-        				<input type="text" class="input-medium" ng-model="qq" name="qq" placeholder="QQ">
+    			<div class="form-group">
+      				<label class="col-sm-2 control-label" for="qq">QQ(选填)</label>
+      				<div class="col-sm-3">
+        				<input type="text" class="form-control input-medium" ng-model="qq" name="qq" placeholder="QQ">
       				</div>
     			</div>
-   				<div class="form-actions">
-      				<input type="submit" class="btn btn-success btn-large" name="action" value="注册">
+   				<div class="form-group">
+   					<div class="col-sm-offset-2 col-sm-4">
+   						<input type="submit" class="btn btn-success btn-large" name="action" value="注册">
+   					</div>
     			</div>
   			</fieldset>
 		</form>

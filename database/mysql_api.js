@@ -100,6 +100,10 @@ exports.getsands = function (req,res) {
 	var sql="select * from timemanage.sands as s,timemanage.items as it where it.iditems=s.item and it.user=? and it.name=?";
 	var connection = mysql.createConnection(config);
 	var data=[req.session.id,req.param('sand')];
+	if(req.param('sand')==null){
+		sql="select * from timemanage.sands as s,timemanage.items as it where it.iditems=s.item and it.user=?";
+		data=[req.session.id];
+	}
 	console.log(data);
 	connection.connect();
 	connection.query(sql,data,function (err,result) {
@@ -185,6 +189,54 @@ exports.hideitem = function (req,res) {
 		console.log(err);
 		if(result!=null)
 			response.state=true;
+		res.json(response);
+	});
+	connection.end();
+}
+
+exports.getTasks = function (req,res) {
+	var connection = mysql.createConnection(config);
+	connection.connect();
+	var sql='select t.idtasks as id,t.description,t.state from timemanage.tasks as t where t.user=?';
+	data=[req.session.id];
+	connection.query(sql,data,function (err,result) {
+		var response = {
+			state	:	false,
+			id		:	req.session.id,
+			loginid	:	req.session.loginid,
+			result	:	result
+		};
+		console.log(result);
+		if(result!=null)
+			response.state=true;
+		res.json(response);
+	});
+	connection.end();
+}
+
+exports.addTask = function (req,res) {
+	var sql="insert into timemanage.tasks(user,description,state,item) values(?,?,?,?)";
+	var connection = mysql.createConnection(config);
+	var data=[
+		req.session.id,
+		req.param('description'),
+		0,
+		req.param('iditem')
+	];
+	console.log(data);
+	connection.connect();
+	connection.query(sql,data,function (err,result) {
+		var response={
+			state:false,
+			id:req.session.id,
+			loginid:req.session.loginid,
+			result:result
+		};
+		console.log(result);
+		console.log(err);
+		if(result!=null)
+			response.state=true;
+		console.log(response);
 		res.json(response);
 	});
 	connection.end();

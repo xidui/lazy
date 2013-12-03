@@ -109,6 +109,7 @@ lazyctrs.controller('Register', function Register($scope, $http) {
 
 lazyctrs.controller('Items', function Items($scope, $http) {
 	getItems(0);
+	getsand(null);
 	function getItems(all) {
 		$http({
 			url:'/data/items',
@@ -216,7 +217,46 @@ lazyctrs.controller('Items', function Items($scope, $http) {
 });
 
 lazyctrs.controller('Tasks',function Tasks($scope, $http) {
-	
+	getTasks();
+	getItems();
+	function getTasks() {
+		$http({
+			url		:'/data/tasks',
+			method	:'post'
+		}).success(function(data) {
+			data.result.forEach(function(e){
+				if(e.state==0)
+					e.state='default';
+				else if (e.state==1)
+					e.state='success';
+			});
+			$scope.tasks=data.result;
+		});
+	}
+	function getItems() {
+		$http({
+			url		:'/data/items',
+			method	:'post',
+			data	:{
+				showall	:1
+			}
+		}).success(function(data) {
+			$scope.items=data.result;
+		});
+	}
+	$scope.addTask=function () {
+		$http({
+			url		:'/add/addTask',
+			method	:'post',
+			data	:{
+				description	:	$scope.description,
+				iditem		:	$scope.Item
+			}
+		}).success(function(data) {
+			if(data.state)
+				window.location.reload();
+		});
+	}
 });
 
 lazyctrs.controller('tryy', function tryy($scope, $http) {

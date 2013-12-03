@@ -1,8 +1,7 @@
 <div class="container">
 	<h1 ng-controller="getUser">Hello {{user.name}}</h1>
-	<p style="height: 10px;"></p>
 	<div class="row" ng-controller="Items">
-		<div class="span4">
+		<div class="col-md-4">
 			<table class="table table-striped">
 				<th>
 					<tr>
@@ -15,7 +14,7 @@
 							    <span class="caret"></span>
 							  	</button>
 							  	<ul class="dropdown-menu">
-							    	<li class="disabled"><a tabindex="-1" ng-click="">View total details</a></li>
+							    	<li><a tabindex="-1" ng-click="getsand(null);">View total details</a></li>
 							    	<li><a tabindex="-1" ng-click="getItemsAll();">Show all items</a></li>
 							    	<li class="divider"></li>
 							    	<li><a tabindex="-1" href="" ng-click="addnewitem();">Add new Item</a></li>
@@ -26,8 +25,10 @@
 				</th>
 				<tr ng-hide="addnewitem_hide">
 					<form method="POST" ng-submit="addnewitem();">
-						<td class="span2" colspan="2"><input type="text" ng-model="newitemname" class="input" placeholder="新项目名称"/></td>
-						<td><input type="submit" class="btn" value="OK"/></td>
+						<td class="span2" colspan="2">
+							<input type="text" ng-model="newitemname" class="form-control" placeholder="新项目名称"/>
+						</td>
+						<td><input type="submit" class="btn btn-default" value="OK"/></td>
 					</form>
 				</tr>
 				<tr ng-repeat="item in items" >
@@ -35,8 +36,8 @@
 					<td class="span2">{{item.sum==null?0:item.sum}}</td>
 					<td class="span3">
 						<div class="btn-group">
-						  	<button class="btn" ng-click="getsand('{{item.name}}')">Details</button>
-						  	<button class="btn dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></button>
+						  	<button class="btn btn-default" ng-click="getsand('{{item.name}}')">Details</button>
+						  	<button class="btn btn-default dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></button>
 						  	<ul class="dropdown-menu pull-right">
 						    	<li><a ng-click="hideitem('{{item.name}}',-1)">Delete item</a></li>
 						    	<li><a ng-click="hideitem('{{item.name}}',0)">Hide item</a></li>
@@ -46,16 +47,17 @@
 				</tr>
 			</table>
 		</div>
-		<div class="span6" ng-hide="viewdetail_hide">
+		
+		<div class="col-md-8" ng-hide="viewdetail_hide">
 			<span ng-hide="true">{{itemname}}</span>
 			<table class="table table-bordered table-striped table-condensed">
 				<th>
 					<tr><td>name</td><td>time(hour)</td><td>datatime</td><td>comments</td></tr>
 				</th>
 				<tr ng-repeat="sand in sands" >
-					<td class="span1">{{sand.name}}</td>
-					<td class="span1">{{sand.time}}</td>
-					<td class="span2">{{sand.datetime|date:'yyyy-MM-dd HH:mm:ss'}}</td>
+					<td class="col-md-1">{{sand.name}}</td>
+					<td class="col-md-1">{{sand.time}}</td>
+					<td class="col-md-3">{{sand.datetime|date:'yyyy-MM-dd HH:mm:ss'}}</td>
 					<td style="text-align: left;">{{sand.comments}}</td>
 				</tr>
 				<tr ng-hide="addnewsand_hide">
