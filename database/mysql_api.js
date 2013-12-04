@@ -8,6 +8,12 @@ var config={
   database : 'timemanage',
 };
 
+function getTime(){
+	var d=new Date();
+	var systime=d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate()+' '+d.getHours()+':'+d.getMinutes()+':'+d.getSeconds();
+	return systime;
+}
+
 exports.login = function (req,res) {
 	var sql='select u.id,u.loginid from timemanage.users as u where loginid = ? and password = ?';
 	var data=[req.param('username'),req.param('password')];
@@ -215,13 +221,14 @@ exports.getTasks = function (req,res) {
 }
 
 exports.addTask = function (req,res) {
-	var sql="insert into timemanage.tasks(user,description,state,item) values(?,?,?,?)";
+	var sql="insert into timemanage.tasks(user,description,state,deadline,createtime) values(?,?,?,?,?)";
 	var connection = mysql.createConnection(config);
 	var data=[
 		req.session.id,
 		req.param('description'),
 		0,
-		req.param('iditem')
+		req.param('year')+'-'+req.param('month')+'-'+req.param('date'),
+		getTime()
 	];
 	console.log(data);
 	connection.connect();
@@ -237,6 +244,47 @@ exports.addTask = function (req,res) {
 		if(result!=null)
 			response.state=true;
 		console.log(response);
+		res.json(response);
+	});
+	connection.end();
+}
+
+exports.getTasksands = function (req,res) {
+	var sql="select * from timemanage.sands as s,timemanage.tasks as ta where ta.idtasks=s.task and ta.user=? and ta.idtasks=?";
+	var connection = mysql.createConnection(config);
+	var data=[req.session.id,req.param('idtask')];
+	console.log(data);
+	connection.connect();
+	connection.query(sql,data,function (err,result) {
+		var response={
+			state:false,
+			id:req.session.id,
+			loginid:req.session.loginid,
+			result:result
+		};
+		console.log(result);
+		console.log(err);
+		if(result!=null)
+			response.state=true;
+		res.json(response);
+	});
+	connection.end();
+}
+
+exports.taskstate = function (req,res) {
+	var connection = mysql.createConnection(config);
+	connection.connect();
+	connection.query('UPDATE timemanage.tasks as ta SET ta.state=? WHERE ta.idtasks=?',[req.param('taskstate'),req.param('idtask')],function (err,result){
+		var response = {
+			state 	:	false,
+			id		:	req.session.id,
+			loginid	:	req.session.loginid,
+			result	:	result
+		};
+		console.log(result);
+		console.log(err);
+		if(result!=null)
+			response.state=true;
 		res.json(response);
 	});
 	connection.end();

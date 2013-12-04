@@ -2,16 +2,21 @@
 	<div class="row" ng-controller="Tasks">	
 		<div class="col-md-10 col-md-offset-1">
 			<div class="panel-group" id="accordion">
-			  	<div class="panel panel-{{task.state}}" ng-repeat="task in tasks">
+			  	<div class="panel panel-{{task.state==1?'success':'default'}}" ng-repeat="task in tasks" ng-controller="Task">
 			    	<div class="panel-heading">
 			      		<h4 class="panel-title">
 			        		<a data-toggle="collapse" data-parent="#accordion" data-target="#{{task.id}}">{{task.description}}</a>
 			        		<span class="caret"></span>
+			        		<input style="float: right;" type="checkbox" ng-model="confirmed" ng-change="statechange()"/>
+			        		<span style="float: right;">{{confirmed?"Done":"Not Yet"}}</span>
 			      		</h4>
 			    	</div>
 			    	<div id="{{task.id}}" class="panel-collapse collapse">
-			      		<div class="panel-body">
-			        		{{task.description}}
+			      		<div class="panel-body" ng-hide="task.state==1">
+			        		<button ng-click="abc();"></button>
+			      		</div>
+			      		<div class="panel-body" ng-repeat="sand in sands">
+			      			{{sand.comments}}
 			      		</div>
 			    	</div>
 			  	</div>
@@ -37,11 +42,23 @@
 		        			</div>
 		        		</div>
 		        		<div class="row">
-		        			<label for="" class="control-label col-md-3 col-md-offset-2">belong to:</label>
+		        			<label for="" class="control-label col-md-3 col-md-offset-2"> Deadline Date:</label>
 		        			<div class="form-group col-md-5">
-		        				<select class="form-control" ng-model="Item">
-		        					<option ng-repeat="item in items" value="{{item.iditems}}">{{item.name}}</option>
-		        				</select>
+		        				<div class="row">
+		        					<div>
+		        						<input type="number" class="form-control" ng-model="year" name="year" placeholder="year">
+		        					</div>
+		        				</div>
+		        				<div class="row">
+		        					<div>
+		        						<input type="number" class="form-control input-sm" ng-model="month" name="month" placeholder="month">
+		        					</div>
+		        				</div>
+		        				<div class="row">
+		        					<div>
+		        						<input type="number" class="form-control input-sm" ng-model="date" name="date" placeholder="date">
+		        					</div>
+		        				</div>
 		        			</div>
 		        		</div>
 		      		</div>

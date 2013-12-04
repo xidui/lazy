@@ -224,12 +224,6 @@ lazyctrs.controller('Tasks',function Tasks($scope, $http) {
 			url		:'/data/tasks',
 			method	:'post'
 		}).success(function(data) {
-			data.result.forEach(function(e){
-				if(e.state==0)
-					e.state='default';
-				else if (e.state==1)
-					e.state='success';
-			});
 			$scope.tasks=data.result;
 		});
 	}
@@ -250,13 +244,46 @@ lazyctrs.controller('Tasks',function Tasks($scope, $http) {
 			method	:'post',
 			data	:{
 				description	:	$scope.description,
-				iditem		:	$scope.Item
+				year		:	$scope.year,
+				month		:	$scope.month,
+				date		:	$scope.date
 			}
 		}).success(function(data) {
 			if(data.state)
 				window.location.reload();
 		});
 	}
+});
+
+lazyctrs.controller('Task',function Task($scope,$http) {
+	$http({
+		url		:'/data/tasksands',
+		method	:'post',
+		data	:{
+			idtask	:	$scope.task.id
+		}
+	}).success(function (data) {
+		$scope.sands=data.result;
+	});
+	if($scope.task.state==1)
+		$scope.confirmed=true;
+	$scope.abc=function () {
+		alert($scope.task.id);
+	}
+	$scope.statechange=function () {
+		$scope.task.state=1-$scope.task.state;
+		$http({
+			url		:'/modi/taskstate',
+			method	:'post',
+			data	:{
+				idtask		:	$scope.task.id,
+				taskstate	:	$scope.task.state
+			}
+		}).success(function (data) {
+			/////////
+		});
+	}
+	
 });
 
 lazyctrs.controller('tryy', function tryy($scope, $http) {

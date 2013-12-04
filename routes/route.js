@@ -98,6 +98,9 @@
  	app.post('/data/tasks',function (req,res) {
  		my.getTasks(req,res);
  	});
+ 	app.post('/data/tasksands',function (req,res) {
+ 		my.getTasksands(req,res);
+ 	});
  	
  	//the operations accociating with db update and insert and delete
  	app.post('/add/additem',function(req,res){
@@ -111,5 +114,8 @@
  	});
  	app.post('/modi/hideitem',function(req,res){
  		my.hideitem(req,res);
+ 	});
+ 	app.post('/modi/taskstate',function (req,res) {
+ 		my.taskstate(req,res);
  	});
  }
