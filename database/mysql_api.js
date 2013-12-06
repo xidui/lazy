@@ -145,7 +145,14 @@ exports.addsand = function (req,res) {
 	//find the itemid with itemname first
 	var connection = mysql.createConnection(config);
 	connection.connect();
-	connection.query("select it.iditems from timemanage.items as it where it.name=?",[req.param('itemname')],function (err,result) {
+	var sql="select it.iditems from timemanage.items as it where it.name=? and it.user=?";
+	var data=[
+		req.param('itemname'),
+		req.session.id
+	];
+	console.log(data);
+	connection.query(sql,data,function (err,result) {
+		console.log(result);
 		var iditems=result[0].iditems;
 		console.log(iditems);
 		var sql="insert into timemanage.sands(time,datetime,item,comments,iduser) values(?,?,?,?,?)";
