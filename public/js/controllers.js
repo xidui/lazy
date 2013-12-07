@@ -88,7 +88,12 @@ lazyctrs.controller('Register', function Register($scope, $http) {
 			var s='恭喜注册成功';
 			if(!data.state)
 				s='抱歉注册失败';
-			alert(s);
+			if(!date.state){
+				window.location='#/view/manage';
+				window.location.reload();
+			}else{
+				alert(s);
+			}
 		});
 	}
 	$scope.checkusername=function() {
@@ -256,6 +261,16 @@ lazyctrs.controller('Tasks',function Tasks($scope, $http) {
 });
 
 lazyctrs.controller('Task',function Task($scope,$http) {
+//	$('.form_datetime').datetimepicker({
+//	    //language:  'fr',
+//	    weekStart: 1,
+//	    todayBtn:  1,
+//		autoclose: 1,
+//		todayHighlight: 1,
+//		startView: 2,
+//		forceParse: 0,
+//	    showMeridian: 1
+//	});
 	$http({
 		url		:'/data/tasksands',
 		method	:'post',
@@ -267,8 +282,29 @@ lazyctrs.controller('Task',function Task($scope,$http) {
 	});
 	if($scope.task.state==1)
 		$scope.confirmed=true;
-	$scope.abc=function () {
-		alert($scope.task.id);
+	$scope.addtasksand=function () {
+		$http({
+			url		:'/add/addTasksand',
+			method	:'post',
+			data	:{
+				item		:	$scope.iditem,
+				comments	:	$scope.comments,
+				time		:	$scope.timespend,
+				task		:	$scope.task.id
+			}
+		}).success(function (data) {
+			if(data.state){
+				$scope.sands.push({
+					comments	:	data.data[3],
+					datetime	:	data.data[1],
+					time		:	data.data[0],
+					item		:	data.data[2]
+				});
+			}
+			$scope.comments=null;
+			$scope.timespend=null;
+			$scope.iditem=null;
+		});
 	}
 	$scope.statechange=function () {
 		$scope.task.state=1-$scope.task.state;

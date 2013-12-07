@@ -78,8 +78,12 @@ exports.register = function (req,res) {
 		var response={state:false};
 		console.log(result);
 		console.log(err);
-		if(result!=null)
+		if(result!=null){
 			response.state=true;
+			req.session={id:result.insertId,loginid:req.param('username')};
+			response.id=result.insertId;
+			response.loginid=req.param('username');			
+		}
 		res.json(response);
 	});
 	connection.end();
@@ -210,7 +214,7 @@ exports.hideitem = function (req,res) {
 exports.getTasks = function (req,res) {
 	var connection = mysql.createConnection(config);
 	connection.connect();
-	var sql='select t.idtasks as id,t.description,t.state from timemanage.tasks as t where t.user=?';
+	var sql='select t.idtasks as id,t.description,t.state,t.deadline from timemanage.tasks as t where t.user=?';
 	data=[req.session.id];
 	connection.query(sql,data,function (err,result) {
 		var response = {
@@ -237,6 +241,8 @@ exports.addTask = function (req,res) {
 		req.param('year')+'-'+req.param('month')+'-'+req.param('date'),
 		getTime()
 	];
+	if(req.param('year')==null||req.param('month')==null||req.param('date')==null)
+		data[3]=null;
 	console.log(data);
 	connection.connect();
 	connection.query(sql,data,function (err,result) {
@@ -287,6 +293,36 @@ exports.taskstate = function (req,res) {
 			id		:	req.session.id,
 			loginid	:	req.session.loginid,
 			result	:	result
+		};
+		console.log(result);
+		console.log(err);
+		if(result!=null)
+			response.state=true;
+		res.json(response);
+	});
+	connection.end();
+}
+
+exports.addTasksand = function (req,res) {
+	var sql="insert into timemanage.sands(time,datetime,item,comments,iduser,task) values(?,?,?,?,?,?)";
+	var connection = mysql.createConnection(config);
+	var data=[
+		req.param('time'),
+		getTime(),
+		req.param('item'),
+		req.param('comments'),
+		req.session.id,
+		req.param('task')
+	];
+	console.log(data);
+	connection.connect();
+	connection.query(sql,data,function (err,result) {
+		var response={
+			state:false,
+			id:req.session.id,
+			loginid:req.session.loginid,
+			insertId:result.insertId,
+			data	:data
 		};
 		console.log(result);
 		console.log(err);

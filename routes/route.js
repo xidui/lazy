@@ -112,6 +112,9 @@
  	app.post('/add/addTask',function(req,res){
  		my.addTask(req,res);
  	});
+ 	app.post('/add/addTasksand',function(req,res){
+ 		my.addTasksand(req,res);
+ 	});
  	app.post('/modi/hideitem',function(req,res){
  		my.hideitem(req,res);
  	});
