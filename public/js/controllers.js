@@ -114,7 +114,7 @@ lazyctrs.controller('Register', function Register($scope, $http) {
 
 lazyctrs.controller('Items', function Items($scope, $http) {
 	getItems(0);
-	getsand(null);
+	getsand(null,1,1);
 	function getItems(all) {
 		$http({
 			url:'/data/items',
@@ -126,24 +126,36 @@ lazyctrs.controller('Items', function Items($scope, $http) {
 		    $scope.items = data.result;
 		});
 	};
-	function getsand(item) {
+	function getsand(item,pagenum,bar) {
+		if(pagenum==0||pagenum-$scope.totalpages>=1)return;
+		if(item!=null)
+			$scope.itemname=item;
+		$scope.pageindex=pagenum;
 		$http({
 			url:'/data/sands',
 			method:'post',
 			data:{
-				sand	:	item
+				sand		:	$scope.itemname,
+				pagesize	:	10,
+				page		:	pagenum
 			}
 		}).success(function(data) {
 			$scope.viewdetail_hide=false;
 			$scope.sands=data.result;
-			$scope.itemname=item;
+			$scope.totalpages=Math.ceil(data.rows/10);
+			if(bar!=1)return;
+			//处理分页相关的页面元素
+			$scope.pages=[];
+			for(var i=0;i<=data.rows/10;i++){
+				$scope.pages.push({pagenum:i+1});
+			}
 		});
 	}
 	$scope.getItemsAll =function() {
 		getItems(1);
 	};
-  	$scope.getsand=function(item) {
-  		getsand(item);
+  	$scope.getsand=function(item,pagenum,bar) {
+  		getsand(item,pagenum,bar);
   	};
   	$scope.closedetail=function(){
   		$scope.viewdetail_hide=true;
@@ -190,7 +202,7 @@ lazyctrs.controller('Items', function Items($scope, $http) {
   						e['sum']=e['sum']+$scope.timespend;
   				}
   			});
-  			getsand($scope.itemname);
+  			getsand($scope.itemname,$scope.totalpages,0);
   			$scope.timespend=null;
   			$scope.comment=null;
   		});	

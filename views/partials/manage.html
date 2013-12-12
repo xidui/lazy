@@ -8,13 +8,12 @@
 						<td>name</td>
 						<td>sum</td>
 						<td>
-							<div class="btn-group dropdown">
-							  	<button class="btn btn-success">Start</button>
+							<div class="dropdown">
 							  	<button class="btn btn-success dropdown-toggle" data-toggle="dropdown">
 							    <span class="caret"></span>
 							  	</button>
 							  	<ul class="dropdown-menu">
-							    	<li><a tabindex="-1" ng-click="getsand(null);">View total details</a></li>
+							    	<li><a tabindex="-1" ng-click="getsand(null,1,1);">View total details</a></li>
 							    	<li><a tabindex="-1" ng-click="getItemsAll();">Show all items</a></li>
 							    	<li class="divider"></li>
 							    	<li><a tabindex="-1" href="" ng-click="addnewitem();">Add new Item</a></li>
@@ -36,7 +35,7 @@
 					<td class="span2">{{item.sum==null?0:item.sum}}</td>
 					<td class="span3">
 						<div class="btn-group">
-						  	<button class="btn btn-default" ng-click="getsand('{{item.name}}')">Details</button>
+						  	<button class="btn btn-default" ng-click="getsand('{{item.name}}',1,1);">Details</button>
 						  	<button class="btn btn-default dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></button>
 						  	<ul class="dropdown-menu pull-right">
 						    	<li><a ng-click="hideitem('{{item.name}}',-1)">Delete item</a></li>
@@ -50,6 +49,15 @@
 		
 		<div class="col-md-8" ng-hide="viewdetail_hide">
 			<span ng-hide="true">{{itemname}}</span>
+			<div>
+				<span ng-hide="true">{{pageindex}}</span>
+				<span ng-hide="true">{{totalpages}}</span>
+				<ul class="pagination pagination-sm">
+				  <li class="{{pageindex==1?'disabled':''}}"><a ng-click="getsand(null,pageindex-1,0);">&laquo;</a></li>
+				  <li class="{{pageindex==page.pagenum?'active':''}}" ng-repeat="page in pages"><a ng-click="getsand(null,{{page.pagenum}},0);">{{page.pagenum}}</a></li>
+				  <li class="{{totalpages<=pageindex?'disabled':''}}"><a ng-click="getsand(null,pageindex+1,0);">&raquo;</a></li>
+				</ul>
+			</div>
 			<table class="table table-bordered table-striped table-condensed">
 				<th>
 					<tr><td>name</td><td>time(hour)</td><td>datatime</td><td>comments</td></tr>

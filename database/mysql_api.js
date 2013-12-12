@@ -107,24 +107,49 @@ exports.getitems = function (req,res){
 }
 
 exports.getsands = function (req,res) {
-	var sql="select * from timemanage.sands as s,timemanage.items as it where it.iditems=s.item and it.user=? and it.name=?";
-	var connection = mysql.createConnection(config);
-	var data=[req.session.id,req.param('sand')];
-	if(req.param('sand')==null){
-		sql="select * from timemanage.sands as s,timemanage.items as it where it.iditems=s.item and it.user=?";
-		data=[req.session.id];
+	var connection1 = mysql.createConnection(config);
+	var sql="select count(*) as rowscount from timemanage.sands as s,timemanage.items as it where it.iditems=s.item and it.user=?";
+	var data = [req.session.id];
+	if(req.param('sand')!=null&&req.param('sand')!=''){
+		sql="select count(*) as rowscount from timemanage.sands as s,timemanage.items as it where it.iditems=s.item and it.user=? and it.name=?";
+		data = [req.session.id,req.param('sand')];
 	}
-	console.log(data);
-	connection.connect();
-	connection.query(sql,data,function (err,result) {
-		var response={state:false,result:result};
-		console.log(result);
-		console.log(err);
-		if(result!=null)
-			response.state=true;
-		res.json(response);
+	connection1.connect();
+	connection1.query(sql,data,function (err,result1) {
+		var sql="select * from timemanage.sands as s,timemanage.items as it where it.iditems=s.item and it.user=? and it.name=? limit ?,?";
+		var connection = mysql.createConnection(config);
+		var data=[
+			req.session.id,
+			req.param('sand'),
+			(req.param('page')-1)*req.param('pagesize'),
+			req.param('pagesize')
+		];
+		if(req.param('sand')==null||req.param('sand')==''){
+			sql="select * from timemanage.sands as s,timemanage.items as it where it.iditems=s.item and it.user=? limit ?,?";
+			data=[
+				req.session.id,
+				(req.param('page')-1)*req.param('pagesize'),
+				req.param('pagesize')
+			];
+		}
+		console.log(data);
+		connection.connect();
+		connection.query(sql,data,function (err,result) {
+			var response={
+				state	:	false,
+				rows	:	result1[0].rowscount,
+				result	:	result
+			};
+			console.log(result);
+			console.log(result1);
+			console.log(err);
+			if(result!=null)
+				response.state=true;
+			res.json(response);
+		});
+		connection.end();
 	});
-	connection.end();
+	connection1.end();
 }
 
 exports.additem = function (req,res) {
