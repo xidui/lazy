@@ -166,6 +166,7 @@ lazyctrs.controller('Items', function Items($scope, $http) {
 		});
 	}
 	$scope.getItemsAll =function() {
+		$scope.items = null;
 		getItems(1);
 	};
   	$scope.getsand=function(item,pagenum,bar) {
