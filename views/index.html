@@ -21,11 +21,11 @@
 	  	</div>	 
 	  	<!-- Collect the nav links, forms, and other content for toggling -->
 	  	<div class="collapse navbar-collapse" id="navbar-collapse-xxx">
-	    	<ul class="nav navbar-nav">
-	      		<li class="active"><a href="#">首页</a></li>
-	      		<li><a href="#/view/task">任务</a></li>
-	      		<li><a href="#/view/manage">统计</a></li>
-	      		<li><a href="#">关注</a></li>
+	    	<ul class="nav navbar-nav" ng-controller="PageNav">
+	      		<li class="{{view=='index'?'active':''}}"><a href="#" ng-click="changeview('index')">首页</a></li>
+	      		<li class="{{view=='task'?'active':''}}"><a href="#/view/task" ng-click="changeview('task')">任务</a></li>
+	      		<li class="{{view=='manage'?'active':''}}"><a href="#/view/manage" ng-click="changeview('manage')">统计</a></li>
+	      		<li class="{{view=='care'?'active':''}}"><a href="#" ng-click="changeview('care')">关注</a></li>
 	    	</ul>
 	    
 	    	<div class="animate-switch-container" ng-switch on="loginstate">

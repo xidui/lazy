@@ -14,6 +14,13 @@ lazyctrs.controller('getUser', function getUser($scope, $http) {
   	});
 });
 
+lazyctrs.controller('PageNav', function PageNav($scope, $http) {
+	$scope.view='index';
+  	$scope.changeview = function (view) {
+  		$scope.view=view;
+  	}
+});
+
 lazyctrs.controller('Login', function Login($scope, $http) {
 	function checkloginstate($http){
 		$http({
