@@ -79,6 +79,7 @@ exports.register = function (req,res) {
 		console.log(result);
 		console.log(err);
 		if(result!=null){
+			console.log('abc');
 			response.state=true;
 			req.session={id:result.insertId,loginid:req.param('username')};
 			response.id=result.insertId;

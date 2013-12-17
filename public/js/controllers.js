@@ -134,10 +134,14 @@ lazyctrs.controller('Items', function Items($scope, $http) {
 		});
 	};
 	function getsand(item,pagenum,bar) {
+//		alert(1);
+//		alert('pagenum:'+pagenum);
+//		alert('totalpages:'+$scope.totalpages);
 		if(pagenum==0||pagenum-$scope.totalpages>=1)return;
 		if(item!=null)
 			$scope.itemname=item;
 		$scope.pageindex=pagenum;
+//		alert(1.5);
 		$http({
 			url:'/data/sands',
 			method:'post',
@@ -147,9 +151,12 @@ lazyctrs.controller('Items', function Items($scope, $http) {
 				page		:	pagenum
 			}
 		}).success(function(data) {
+//			alert(2);
 			$scope.viewdetail_hide=false;
 			$scope.sands=data.result;
 			$scope.totalpages=Math.ceil(data.rows/10);
+			if(data.rows==0)
+				$scope.totalpages=1;
 			if(bar!=1)return;
 			//处理分页相关的页面元素
 			$scope.pages=[];
