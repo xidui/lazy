@@ -15,10 +15,13 @@ lazyctrs.controller('getUser', function getUser($scope, $http) {
 });
 
 lazyctrs.controller('PageNav', function PageNav($scope, $http) {
-	$scope.view='index';
+	$scope.view=location.href.split('/')[5];
   	$scope.changeview = function (view) {
   		$scope.view=view;
   	}
+//  	$scope.$on('pagechange',function (event,msg) {
+//  		$scope.view=msg;
+//  	});
 });
 
 lazyctrs.controller('Login', function Login($scope, $http) {
@@ -43,14 +46,11 @@ lazyctrs.controller('Login', function Login($scope, $http) {
 			}
 		}).success(function(data) {
 			if(data.state){
-				location.reload();
 				$scope.loginstate='yes';
 				$scope.loginid=data.loginid;
 			}else {
 				alert("用户名或密码错误！");
 			}
-//			alert(location);
-//			alert(window.location);
 			window.location="/#/view/manage"
 			location.reload();
 		});

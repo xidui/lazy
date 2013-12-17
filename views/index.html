@@ -7,7 +7,7 @@
   	<link rel="stylesheet" href="css/bootstrap-datetimepicker.css">
   	<link rel="stylesheet" href="css/style.css">
 </head>
-<body>
+<body ng-controller="PageNav">
 	<nav class="navbar navbar-default" role="navigation" ng-controller="Login">
 	  	<!-- Brand and toggle get grouped for better mobile display -->
 	  	<div class="navbar-header">
@@ -21,11 +21,11 @@
 	  	</div>	 
 	  	<!-- Collect the nav links, forms, and other content for toggling -->
 	  	<div class="collapse navbar-collapse" id="navbar-collapse-xxx">
-	    	<ul class="nav navbar-nav" ng-controller="PageNav">
-	      		<li class="{{view=='index'?'active':''}}"><a href="#" ng-click="changeview('index')">首页</a></li>
+	    	<ul class="nav navbar-nav">
+	      		<li class="{{view=='welcome'?'active':''}}"><a href="#" ng-click="changeview('welcome')">首页</a></li>
 	      		<li class="{{view=='task'?'active':''}}"><a href="#/view/task" ng-click="changeview('task')">任务</a></li>
 	      		<li class="{{view=='manage'?'active':''}}"><a href="#/view/manage" ng-click="changeview('manage')">统计</a></li>
-	      		<li class="{{view=='care'?'active':''}}"><a href="#" ng-click="changeview('care')">关注</a></li>
+	      		<li class="{{view=='care'?'active':''}}" ng-hide="true"><a href="#">关注</a></li>
 	    	</ul>
 	    
 	    	<div class="animate-switch-container" ng-switch on="loginstate">
