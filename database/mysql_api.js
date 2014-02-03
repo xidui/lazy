@@ -5,7 +5,7 @@ var config={
   port     : '3306',
   user     : 'root',
   password : 'xidui',
-  database : 'timemanage',
+  database : 'timemanage'
 };
 
 function getTime(){
@@ -240,7 +240,7 @@ exports.hideitem = function (req,res) {
 exports.getTasks = function (req,res) {
 	var connection = mysql.createConnection(config);
 	connection.connect();
-	var sql='select t.idtasks as id,t.description,t.state,t.deadline from timemanage.tasks as t where t.user=?';
+	var sql='select t.idtasks as id,t.description,t.state,t.deadline from timemanage.tasks as t where t.user=? order by t.state';
 	data=[req.session.id];
 	connection.query(sql,data,function (err,result) {
 		var response = {
@@ -354,6 +354,62 @@ exports.addTasksand = function (req,res) {
 		console.log(err);
 		if(result!=null)
 			response.state=true;
+		res.json(response);
+	});
+	connection.end();
+}
+
+exports.searchFriend = function (req,res) {
+//	var sql = "select loginid,email from timemanage.users where loginid = ?";
+	var sql = "select u.loginid,u.email,c.careid from timemanage.users as u left join timemanage.care as c on u.loginid=c.careid where u.loginid=? and (c.loginid is null or c.loginid=?)";
+	var connection = mysql.createConnection(config);
+	var data=[req.param('fname'),req.session.loginid];
+	connection.connect();
+	connection.query(sql,data,function (err,result) {
+		var response={
+			state:false,
+			id:req.session.id,
+			loginid:req.session.loginid,
+			friend	:result
+		};
+		console.log(result);
+		if(result!=null)
+			response.state=true;
+		res.json(response);
+	});
+	connection.end();
+}
+
+exports.addCare = function (req,res) {
+	var sql = "INSERT INTO timemanage.care (loginid,careid) VALUES (?,?);";
+	var connection = mysql.createConnection(config);
+	var data = [req.session.loginid,req.param('careid')];
+	connection.connect();
+	connection.query(sql,data,function (err,result) {
+		var response={
+			state	:false,
+			id		:req.session.id,
+			loginid	:req.session.loginid,
+			result	:result
+		};
+		console.log(result);
+		console.log(err);
+		if(result!=null)
+			response.state=true;
+		console.log(response);
+		res.json(response);
+	});
+	connection.end();
+}
+
+exports.execute = function (req,res,sql,data,response) {
+	var connection = mysql.createConnection(config);
+	connection.query(sql,data,function (err,result) {
+		if(result!=null)
+			response.state=true;
+		console.log(result);
+		console.log(err);
+		console.log(response);
 		res.json(response);
 	});
 	connection.end();
