@@ -349,6 +349,47 @@ lazyctrs.controller('Task',function Task($scope,$http) {
 	
 });
 
+lazyctrs.controller('Care',function Care($scope,$http) {
+	$scope.page='view/abc';
+    $scope.mo=1;
+    $scope.ddd = function (mo){
+        alert(mo);
+        $scope.mo=mo+1;
+    }
+	$scope.changepage=function (page) {
+		$scope.page=page;
+	}
+	$scope.searchfriend = function (fname) {
+		$scope.page = 'view/care/friend';
+		$http({
+			url		:'/data/friend',
+			method	:'post',
+			data	:{
+				fname		:	fname
+			}
+		}).success(function (data) {
+			$scope.peoples = data.friend;
+		});
+	}
+	$scope.addcare = function (careid) {
+		$http({
+			url		:'/add/addCare',
+			method	:'post',
+			data	:{
+				careid		:	careid
+			}
+		}).success(function (data) {
+			if(data.state){
+				$scope.peoples.forEach(function (e) {
+					if(e['loginid']==careid){
+						e['careid']=careid;
+					}
+				});
+			}
+		});
+	}
+});
+
 lazyctrs.controller('tryy', function tryy($scope, $http) {
   	$scope.items = ['settings', 'home', 'other'];
   	$scope.selection = $scope.items[1];

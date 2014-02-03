@@ -3,6 +3,11 @@ var lazy = angular.module('lazy', [
   	'lazyctrs'
 ]);
 
+//var care = angular.module('care', [
+//	'ngRoute',
+//	'carectrs'
+//]);
+
 lazy.config(['$routeProvider',
   	function($routeProvider) {
     	$routeProvider.
@@ -17,6 +22,9 @@ lazy.config(['$routeProvider',
       	}).
       	when('/view/task', {
       		templateUrl: '/view/task'
+      	}).
+      	when('/view/care', {
+      		templateUrl: '/view/care'
       	}).
       	when('/view/abc', {
       		templateUrl: '/view/abc'

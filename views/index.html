@@ -1,62 +1,63 @@
 <!doctype html>
-<html lang="en" ng-app="lazy">
+<html lang="en">
 <head>
   	<meta charset="utf-8">
-  	<title>My HTML File</title>
+  	<title>Time</title>
   	<link rel="stylesheet" href="css/bootstrap3.0.0.css">
   	<link rel="stylesheet" href="css/bootstrap-datetimepicker.css">
   	<link rel="stylesheet" href="css/style.css">
 </head>
-<body ng-controller="PageNav">
-	<nav class="navbar navbar-default" role="navigation" ng-controller="Login">
-	  	<!-- Brand and toggle get grouped for better mobile display -->
-	  	<div class="navbar-header">
-	    	<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse-xxx">
-	      		<span class="sr-only">Toggle navigation</span>
-	      		<span class="icon-bar"></span>
-	      		<span class="icon-bar"></span>
-	      		<span class="icon-bar"></span>
-	    	</button>
-	    	<a class="navbar-brand" href="#/view/welcome">Time Manage</a>
-	  	</div>	 
-	  	<!-- Collect the nav links, forms, and other content for toggling -->
-	  	<div class="collapse navbar-collapse" id="navbar-collapse-xxx">
-	    	<ul class="nav navbar-nav">
-	      		<li class="{{view=='welcome'?'active':''}}"><a href="#" ng-click="changeview('welcome')">首页</a></li>
-	      		<li class="{{view=='task'?'active':''}}"><a href="#/view/task" ng-click="changeview('task')">任务</a></li>
-	      		<li class="{{view=='manage'?'active':''}}"><a href="#/view/manage" ng-click="changeview('manage')">统计</a></li>
-	      		<li class="{{view=='care'?'active':''}}" ng-hide="true"><a href="#">关注</a></li>
-	    	</ul>
-	    
-	    	<div class="animate-switch-container" ng-switch on="loginstate">
-	        	<div class="animate-switch" ng-switch-when="yes">
-	        		<div class="navbar-form navbar-right">
-	        			<button class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-	        				<i class="icon-user"></i> 欢迎光临：{{loginid}} 
-	        				<span class="caret"></span>
-	        			</button>
-	        			<ul class="dropdown-menu">
-	        				<li><a href="">修改密码</a></li>
-	        				<li class="divider"></li>
-	        				<li><a href="" ng-click="logout();">logout</a></li>
-	        			</ul>
-	        		</div>
-	        	</div>
-	        	<div class="animate-switch" ng-switch-when="no">
-	        		<form class="navbar-form navbar-right" ng-submit="send(username,password);" role="form">
-	        	  		<div class="form-group">
-	        	    		<input type="text" class="form-control"  name="username" ng-model="username" placeholder="用户名" required/>
-	        	  		</div>
-	        	  		<div class="form-group">
-	        	    		<input type="password" class="form-control" name="password" ng-model="password" placeholder="密码" required/>
-	        	  		</div>
-	        	  		<button type="submit" class="btn btn-primary">登陆</button>
-	        	  		<a class="btn btn-success" href="#/view/register">新用户注册</a>
-	        		</form>
-	        	</div>
-	    	</div>
-	  	</div><!-- /.navbar-collapse -->
-	</nav>
+<body ng-app="lazy">
+	<div ng-controller="PageNav">
+		<nav class="navbar navbar-default" role="navigation" ng-controller="Login">
+		  	<!-- Brand and toggle get grouped for better mobile display -->
+		  	<div class="navbar-header">
+		    	<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse-xxx">
+		      		<span class="sr-only">Toggle navigation</span>
+		      		<span class="icon-bar"></span>
+		      		<span class="icon-bar"></span>
+		      		<span class="icon-bar"></span>
+		    	</button>
+		    	<a class="navbar-brand" href="#/view/welcome">Time Manage</a>
+		  	</div>	 
+		  	<!-- Collect the nav links, forms, and other content for toggling -->
+		  	<div class="collapse navbar-collapse" id="navbar-collapse-xxx">
+		    	<ul class="nav navbar-nav">
+		      		<li class="{{view=='task'?'active':''}}"><a href="#/view/task" ng-click="changeview('task')">任务</a></li>
+		      		<li class="{{view=='manage'?'active':''}}"><a href="#/view/manage" ng-click="changeview('manage')">统计</a></li>
+		      		<li class="{{view=='care'?'active':''}}"><a href="#/view/care" ng-click="changeview('care')">关注</a></li>
+		    	</ul>
+		    
+		    	<div class="animate-switch-container" ng-switch on="loginstate">
+		        	<div class="animate-switch" ng-switch-when="yes">
+		        		<div class="navbar-form navbar-right">
+		        			<button class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+		        				<i class="icon-user"></i> 欢迎光临：{{loginid}} 
+		        				<span class="caret"></span>
+		        			</button>
+		        			<ul class="dropdown-menu">
+		        				<li><a href="">修改密码</a></li>
+		        				<li class="divider"></li>
+		        				<li><a href="" ng-click="logout();">logout</a></li>
+		        			</ul>
+		        		</div>
+		        	</div>
+		        	<div class="animate-switch" ng-switch-when="no">
+		        		<form class="navbar-form navbar-right" ng-submit="send(username,password);" role="form">
+		        	  		<div class="form-group">
+		        	    		<input type="text" class="form-control"  name="username" ng-model="username" placeholder="用户名" required/>
+		        	  		</div>
+		        	  		<div class="form-group">
+		        	    		<input type="password" class="form-control" name="password" ng-model="password" placeholder="密码" required/>
+		        	  		</div>
+		        	  		<button type="submit" class="btn btn-primary">登陆</button>
+		        	  		<a class="btn btn-success" href="#/view/register">新用户注册</a>
+		        		</form>
+		        	</div>
+		    	</div>
+		  	</div><!-- /.navbar-collapse -->
+		</nav>
+	</div>
 	
 	<div id="wrapper">
 		<div>

@@ -29,11 +29,20 @@
    		else
    			res.render('partials/task');
    	});
+   	app.get('/view/care',function (req,res) {
+   		if(!req.session.loginid)
+   			res.render('partials/register');
+   		else
+   			res.render('partials/care');
+   	});
    	app.get('/view/try',function (req,res){
    		res.render('partials/try');
    	});
    	app.get('/view/abc',function (req,res){
    		res.render('partials/abc');
+   	});
+   	app.get('/view/care/friend',function (req,res){
+   		res.render('partials/care/friend');
    	});
    	
  //get json data
@@ -101,6 +110,9 @@
  	app.post('/data/tasksands',function (req,res) {
  		my.getTasksands(req,res);
  	});
+ 	app.post('/data/friend',function (req,res) {
+ 		my.searchFriend(req,res);
+ 	});
  	
  	//the operations accociating with db update and insert and delete
  	app.post('/add/additem',function(req,res){
@@ -114,6 +126,9 @@
  	});
  	app.post('/add/addTasksand',function(req,res){
  		my.addTasksand(req,res);
+ 	});
+ 	app.post('/add/addCare',function(req,res){
+ 		my.addCare(req,res);
  	});
  	app.post('/modi/hideitem',function(req,res){
  		my.hideitem(req,res);
