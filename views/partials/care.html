@@ -1,0 +1,22 @@
+<div class="container" ng-controller="Care">
+	<div class="row">
+	  	<div class="col-md-8" ng-include="page"></div>
+	  	
+	  	<div class="col-md-1">
+	  	</div>
+	  	
+	  	<div class="col-md-3">
+	  		<div>
+		  		<form ng-submit="searchfriend(friendname);">
+			  		<div class="input-group">
+			  			<input type="text" class="form-control" ng-model="friendname">
+			  			<span class="input-group-btn">
+			  				<input class="btn btn-default" type="submit" value="搜索">
+			  			</span>
+			  		</div>
+		  		</form>
+	  		</div>
+	  	</div>
+
+	</div>
+</div>

@@ -1,0 +1,15 @@
+<h1>This is friend page</h1>
+<table class="table table-bordered table-striped table-condensed">
+	<th>
+		<tr><td>loginid</td><td>email</td></tr>
+	</th>
+	<tr ng-repeat="people in peoples" >
+		<td>{{people.loginid}}</td>
+		<td>{{people.email}}</td>
+		<td>
+			<button class="btn btn-success" ng-click="addcare(people.loginid)">{{people.careid==null?"关注":"已关注";}}</button>
+		</td>
+	</tr>
+    <!--<input ng-model="mo">-->
+    <!--<button ng-click="ddd(mo)">{{mo}}</button>-->
+</table>
