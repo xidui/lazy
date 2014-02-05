@@ -351,18 +351,14 @@ lazyctrs.controller('Task',function Task($scope,$http) {
 
 lazyctrs.controller('Care',function Care($scope,$http) {
 	$scope.page='view/abc';
-    $scope.mo=1;
-    $scope.ddd = function (mo){
-        alert(mo);
-        $scope.mo=mo+1;
-    }
+    getfriends();
 	$scope.changepage=function (page) {
 		$scope.page=page;
 	}
 	$scope.searchfriend = function (fname) {
-		$scope.page = 'view/care/friend';
+		$scope.page = 'view/care/people';
 		$http({
-			url		:'/data/friend',
+			url		:'/data/people',
 			method	:'post',
 			data	:{
 				fname		:	fname
@@ -385,9 +381,49 @@ lazyctrs.controller('Care',function Care($scope,$http) {
 						e['careid']=careid;
 					}
 				});
+                getfriends();
 			}
 		});
 	}
+    function getfriends(){
+        $http({
+            url     :'/data/myfriends',
+            method  :'post'
+        }).success(function (data){
+            if(data.state){
+                $scope.friends=data.result;
+            }
+        });
+    }
+    $scope.viewfriendpage = function(friend){
+        $scope.page='view/care/friendpage';
+        $http({
+            url     :'/data/myfrienditems',
+            method  :'post',
+            data    :{
+                friendloginid:friend
+            }
+        }).success(function(data){
+                if(data.state){
+                    $scope.friendloginid=data.friendloginid;
+                    $scope.frienditems=data.result;
+                }
+            });
+    }
+    $scope.getfriendsandsbyitem = function(friendloginid,frienditemname){
+        $http({
+            url     :   '/data/myfrienditemsands',
+            method  :   'post',
+            data    :   {
+                friendloginid   :friendloginid,
+                frienditemname  :frienditemname
+            }
+        }).success(function(data){
+            if(data.state){
+                $scope.frienditemsands=data.result;
+            }
+        });
+    }
 });
 
 lazyctrs.controller('tryy', function tryy($scope, $http) {

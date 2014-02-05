@@ -16,6 +16,19 @@
 			  		</div>
 		  		</form>
 	  		</div>
+            <h4>我的关注</h4>
+            <div>
+                <table class="table table-striped">
+                    <tr>
+                        <td>用户名</td>
+                        <td>总时间</td>
+                    </tr>
+                    <tr ng-repeat="friend in friends">
+                        <td><a ng-click="viewfriendpage(friend.careid)">{{friend.careid}}</a></td>
+                        <td>{{friend.time==null?0:friend.time}}</td>
+                    </tr>
+                </table>
+            </div>
 	  	</div>
 
 	</div>

@@ -5,6 +5,12 @@
  var fs = require('fs');
  var address='/Users/apple/Documents/github/lazy/upload/';
  var my=require('../database/mysql_api.js');
+ var response = {
+     state	    :false,
+     id		    :'',
+     loginid	:'',
+     result	    :''
+ };
  
  exports.gets = function(app) {
  // get views
@@ -41,9 +47,12 @@
    	app.get('/view/abc',function (req,res){
    		res.render('partials/abc');
    	});
-   	app.get('/view/care/friend',function (req,res){
-   		res.render('partials/care/friend');
+   	app.get('/view/care/people',function (req,res){
+   		res.render('partials/care/people');
    	});
+    app.get('/view/care/friendpage',function (req,res){
+        res.render('partials/care/friendpage');
+    });
    	
  //get json data
    	app.get('/data/user',function (req,res){
@@ -110,9 +119,35 @@
  	app.post('/data/tasksands',function (req,res) {
  		my.getTasksands(req,res);
  	});
- 	app.post('/data/friend',function (req,res) {
- 		my.searchFriend(req,res);
+ 	app.post('/data/people',function (req,res) {
+ 		my.searchPeople(req,res);
  	});
+    app.post('/data/myfriends',function (req,res){
+        var sql="select u.id,c.careid,sum(s.time) as time from timemanage.care as c "+
+        "left join timemanage.users as u on u.loginid=c.careid "+
+        "left join timemanage.sands as s on s.iduser=u.id "+
+        "where c.loginid=? group by u.id";
+        var data=[req.session.loginid];
+        my.execute(req,res,sql,data,response);
+    });
+    app.post('/data/myfrienditems',function(req,res){
+        var sql="select i.name as itemname,sum(s.time) as itemtime from timemanage.items as i " +
+            "left join timemanage.sands as s on i.iditems=s.item "+
+            "where user=(select id from timemanage.users as u where u.loginid=?) and i.show=1 group by i.name";
+        var data=[req.param('friendloginid')];
+        var r=response;
+        r.friendloginid=req.param('friendloginid');
+        my.execute(req,res,sql,data,r);
+    });
+    app.post('/data/myfrienditemsands',function(req,res){
+        var sql="SELECT s.comments as comment,s.time as time,s.datetime "+
+                "FROM timemanage.sands as s where s.iduser=( "+
+                "select id from timemanage.users where loginid=?) "+
+                "and s.item in (select iditems from timemanage.items where name=?);";
+        var data=[req.param('friendloginid'),req.param('frienditemname')];
+        var r=response;
+        my.execute(req,res,sql,data,r);
+    });
  	
  	//the operations accociating with db update and insert and delete
  	app.post('/add/additem',function(req,res){
