@@ -5,7 +5,7 @@
 		<td>{{people.loginid}}</td>
 		<td>{{people.email}}</td>
 		<td>
-			<button class="btn btn-success" ng-click="addcare(people.loginid)">{{people.careid==null?"关注":"已关注";}}</button>
+			<button class="btn btn-success" ng-click="addpeople(people.loginid,people.hascared)">{{!people.hascared?"关注":"已关注";}}</button>
 		</td>
 	</tr>
     <!--<input ng-model="mo">-->

@@ -50,8 +50,8 @@
    	app.get('/view/care/people',function (req,res){
    		res.render('partials/care/people');
    	});
-    app.get('/view/care/friendpage',function (req,res){
-        res.render('partials/care/friendpage');
+    app.get('/view/care/peopleitempage',function (req,res){
+        res.render('partials/care/peopleitempage');
     });
    	
  //get json data
@@ -130,21 +130,29 @@
         var data=[req.session.loginid];
         my.execute(req,res,sql,data,response);
     });
-    app.post('/data/myfrienditems',function(req,res){
+    app.post('/data/peopleitems',function(req,res){
         var sql="select i.name as itemname,sum(s.time) as itemtime from timemanage.items as i " +
             "left join timemanage.sands as s on i.iditems=s.item "+
             "where user=(select id from timemanage.users as u where u.loginid=?) and i.show=1 group by i.name";
-        var data=[req.param('friendloginid')];
+        var data=[req.param('peopleloginid')];
         var r=response;
-        r.friendloginid=req.param('friendloginid');
+        r.peopleloginid=req.param('peopleloginid');
         my.execute(req,res,sql,data,r);
     });
-    app.post('/data/myfrienditemsands',function(req,res){
+    app.post('/data/peopleitemsands',function(req,res){
         var sql="SELECT s.comments as comment,s.time as time,s.datetime "+
                 "FROM timemanage.sands as s where s.iduser=( "+
                 "select id from timemanage.users where loginid=?) "+
                 "and s.item in (select iditems from timemanage.items where name=?);";
-        var data=[req.param('friendloginid'),req.param('frienditemname')];
+        var data=[req.param('peopleloginid'),req.param('peopleitemname')];
+        var r=response;
+        my.execute(req,res,sql,data,r);
+    });
+    app.post('/data/myfollowers',function(req,res){
+        var sql="select c1.loginid,c2.careid is not null as hascared FROM timemanage.care as c1 "+
+                "left join timemanage.care as c2 on c1.careid=c2.loginid and c2.careid=c1.loginid "+
+                "where c1.careid=?;";
+        var data=[req.session.loginid];
         var r=response;
         my.execute(req,res,sql,data,r);
     });
@@ -171,4 +179,10 @@
  	app.post('/modi/taskstate',function (req,res) {
  		my.taskstate(req,res);
  	});
+    app.post('/del/delCare',function(req,res){
+        var sql="DELETE FROM timemanage.care WHERE loginid=? and careid=?;";
+        var data=[req.session.loginid,req.param('careid')];
+        var r=response;
+        my.execute(req,res,sql,data,r);
+    });
  }

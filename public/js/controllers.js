@@ -352,22 +352,27 @@ lazyctrs.controller('Task',function Task($scope,$http) {
 lazyctrs.controller('Care',function Care($scope,$http) {
 	$scope.page='view/abc';
     getfriends();
+    getfollowers();
 	$scope.changepage=function (page) {
 		$scope.page=page;
 	}
-	$scope.searchfriend = function (fname) {
+	$scope.searchpeople = function (peoplename) {
 		$scope.page = 'view/care/people';
 		$http({
 			url		:'/data/people',
 			method	:'post',
 			data	:{
-				fname		:	fname
+                peoplename		:	peoplename
 			}
 		}).success(function (data) {
-			$scope.peoples = data.friend;
+			$scope.peoples = data.people;
 		});
 	}
-	$scope.addcare = function (careid) {
+	$scope.addpeople = function (careid,hascared) {
+        if(hascared){
+            alert("您已经关注过"+careid+"了");
+            return;
+        }
 		$http({
 			url		:'/add/addCare',
 			method	:'post',
@@ -376,15 +381,42 @@ lazyctrs.controller('Care',function Care($scope,$http) {
 			}
 		}).success(function (data) {
 			if(data.state){
-				$scope.peoples.forEach(function (e) {
-					if(e['loginid']==careid){
-						e['careid']=careid;
-					}
-				});
                 getfriends();
+                getfollowers();
+                $scope.peoples.forEach(function (e) {
+                    if(e['loginid']==careid){
+                        e['hascared']=1;
+                    }
+                });
 			}
 		});
 	}
+    $scope.delpeople = function (careid){
+        $http({
+            url		:'/del/delCare',
+            method	:'post',
+            data	:{
+                careid		:	careid
+            }
+        }).success(function (data) {
+                if(data.state){
+                    getfriends();
+                    getfollowers();
+                    $scope.peoples.forEach(function (e) {
+                        if(e['loginid']==careid){
+                            e['hascared']=0;
+                        }
+                    });
+                }
+            });
+    }
+    $scope.addfensi = function (fensiid,hascared){
+        if(hascared==0){
+            this.addpeople(fensiid,hascared);
+        }else{
+            this.delpeople(fensiid,hascared);
+        }
+    }
     function getfriends(){
         $http({
             url     :'/data/myfriends',
@@ -395,32 +427,48 @@ lazyctrs.controller('Care',function Care($scope,$http) {
             }
         });
     }
-    $scope.viewfriendpage = function(friend){
-        $scope.page='view/care/friendpage';
+    function getfollowers(){
         $http({
-            url     :'/data/myfrienditems',
+            url     :'/data/myfollowers',
+            method  :'post'
+        }).success(function(data){
+            if(data.state) {
+                $scope.followers=data.result;
+            }
+        });
+    }
+    $scope.viewfollowerpage = function(follower){
+        this.viewpeoplepage(follower);
+    }
+    $scope.viewfriendpage = function(friend){
+        this.viewpeoplepage(friend);
+    }
+    $scope.viewpeoplepage = function(people){
+        $scope.page='view/care/peopleitempage';
+        $http({
+            url     :'/data/peopleitems',
             method  :'post',
             data    :{
-                friendloginid:friend
+                peopleloginid:people
             }
         }).success(function(data){
                 if(data.state){
-                    $scope.friendloginid=data.friendloginid;
-                    $scope.frienditems=data.result;
+                    $scope.peopleloginid=data.peopleloginid;
+                    $scope.peopleitems=data.result;
                 }
             });
     }
-    $scope.getfriendsandsbyitem = function(friendloginid,frienditemname){
+    $scope.getpeoplesandsbyitem = function(peopleloginid,peopleitemname){
         $http({
-            url     :   '/data/myfrienditemsands',
+            url     :   '/data/peopleitemsands',
             method  :   'post',
             data    :   {
-                friendloginid   :friendloginid,
-                frienditemname  :frienditemname
+                peopleloginid   :peopleloginid,
+                peopleitemname  :peopleitemname
             }
         }).success(function(data){
             if(data.state){
-                $scope.frienditemsands=data.result;
+                $scope.peopleitemsands=data.result;
             }
         });
     }

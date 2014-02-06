@@ -1,11 +1,11 @@
-<h3>这是{{friendloginid}}的主页</h3>
+<h3>这是{{peopleloginid}}的主页</h3>
 <div class="panel-group" id="accordion">
-    <div class="panel panel-default" ng-repeat="item in frienditems">
+    <div class="panel panel-default" ng-repeat="item in peopleitems">
         <div class="panel-heading">
             <h4 class="panel-title">
                 <span>{{item.itemname}}</span>
                 <a style="float: right;" data-toggle="collapse" data-parent="#accordion" data-target="#{{item.itemname}}">
-                    <span ng-click="getfriendsandsbyitem(friendloginid,item.itemname)">
+                    <span ng-click="getpeoplesandsbyitem(peopleloginid,item.itemname)">
                         {{item.itemtime==null?0:item.itemtime}}小时
                     </span>
                     <span class="caret" ></span>
@@ -15,10 +15,10 @@
         <div id="{{item.itemname}}" class="panel-collapse collapse">
             <div class="panel-body">
                 <table class="table table-bordered table-striped table-condensed">
-                    <tr ng-repeat="frienditemsand in frienditemsands">
-                        <td>{{frienditemsand.comment}}</td>
-                        <td>{{frienditemsand.time}}</td>
-                        <td>{{frienditemsand.datetime}}</td>
+                    <tr ng-repeat="peopleitemsand in peopleitemsands">
+                        <td>{{peopleitemsand.comment}}</td>
+                        <td>{{peopleitemsand.time}}</td>
+                        <td>{{peopleitemsand.datetime}}</td>
                     </tr>
                 </table>
             </div>

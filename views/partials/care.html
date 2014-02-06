@@ -7,28 +7,48 @@
 	  	
 	  	<div class="col-md-3">
 	  		<div>
-		  		<form ng-submit="searchfriend(friendname);">
+		  		<form ng-submit="searchpeople(peoplename);">
 			  		<div class="input-group">
-			  			<input type="text" class="form-control" ng-model="friendname">
+			  			<input type="text" class="form-control" ng-model="peoplename">
 			  			<span class="input-group-btn">
 			  				<input class="btn btn-default" type="submit" value="搜索">
 			  			</span>
 			  		</div>
 		  		</form>
 	  		</div>
-            <h4>我的关注</h4>
-            <div>
-                <table class="table table-striped">
-                    <tr>
-                        <td>用户名</td>
-                        <td>总时间</td>
-                    </tr>
-                    <tr ng-repeat="friend in friends">
-                        <td><a ng-click="viewfriendpage(friend.careid)">{{friend.careid}}</a></td>
-                        <td>{{friend.time==null?0:friend.time}}</td>
-                    </tr>
-                </table>
+            <br>
+            <ul class="nav nav-tabs" id="myTab">
+                <li class="active"><a data-target="#guanzhu" data-toggle="tab">关注好友</a></li>
+                <li><a data-target="#fensi" data-toggle="tab">我的粉丝</a></li>
+                <li class="hidden"><a data-target="#tuijian" data-toggle="tab">推荐</a></li>
+            </ul>
+            <div class="tab-content">
+                <div class="tab-pane active" id="guanzhu">
+                    <table class="table table-striped">
+                        <tr>
+                            <td>用户名</td>
+                            <td>总时间</td>
+                        </tr>
+                        <tr ng-repeat="friend in friends">
+                            <td><a ng-click="viewfriendpage(friend.careid)">{{friend.careid}}</a></td>
+                            <td>{{friend.time==null?0:friend.time}}</td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="tab-pane" id="fensi">
+                    <table class="table table-striped">
+                        <tr><td>用户名</td><td>状态</td></tr>
+                        <tr ng-repeat="follower in followers">
+                            <td><a ng-click="viewpeoplepage(follower.loginid)">{{follower.loginid}}</a></td>
+                            <td><button class="btn-small btn-link" ng-click="addfensi(follower.loginid,follower.hascared)">
+                                {{follower.hascared==1?"取消":"关注"}}
+                            </button></td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="tab-pane" id="tuijian">...</div>
             </div>
+
 	  	</div>
 
 	</div>
