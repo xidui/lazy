@@ -26,11 +26,8 @@ lazy.config(['$routeProvider',
       	when('/view/care', {
       		templateUrl: '/view/care'
       	}).
-      	when('/view/abc', {
-      		templateUrl: '/view/abc'
-      	}).
-      	when('/view/try', {
-      		templateUrl: '/view/try'
-      	}).
+        when('/view/newthings', {
+            templateUrl: '/view/newthings'
+        }).
    		otherwise({redirectTo: '/view/welcome'});
 }]);

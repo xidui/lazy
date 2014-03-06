@@ -26,6 +26,7 @@
 		      		<li class="{{view=='task'?'active':''}}"><a href="#/view/task" ng-click="changeview('task')">任务</a></li>
 		      		<li class="{{view=='manage'?'active':''}}"><a href="#/view/manage" ng-click="changeview('manage')">统计</a></li>
 		      		<li class="{{view=='care'?'active':''}}"><a href="#/view/care" ng-click="changeview('care')">关注</a></li>
+                    <li class="{{view=='newthings'?'active':''}}"><a href="#/view/newthings" ng-click="changeview('newthings')">好友动态</a></li>
 		    	</ul>
 		    
 		    	<div class="animate-switch-container" ng-switch on="loginstate">
@@ -62,6 +63,9 @@
 	<div id="wrapper">
 		<div>
 		  	<div ng-view></div>
+            <!--<a href="https://graph.renren.com/oauth/authorize?client_id=264666&response_type=code&redirect_uri=http://time.oacal.com">-->
+                <!--<img style="border:0px" src="/images/renren_login_button.png"/>-->
+            <!--</a>-->
 		</div>
 	</div>
 	

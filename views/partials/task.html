@@ -7,7 +7,7 @@
 			      		<h4 class="panel-title">
 			      			<a data-toggle="collapse" data-parent="#accordion" data-target="#{{task.id}}">{{task.description}}</a>
 			      			<span class="caret"></span>
-			      			<span ng-hide="task.deadline==null">Due on:</span>{{task.deadline}}
+			      			<span ng-hide="task.deadline==null">Due on:</span>{{task.deadline|date:'medium'}}
 			        		<input style="float: right;" type="checkbox" ng-model="confirmed" ng-change="statechange()"/>
 			        		<span style="float: right;">{{confirmed?"Finished":"Not Yet"}}</span>
 			      		</h4>

@@ -41,6 +41,12 @@
    		else
    			res.render('partials/care');
    	});
+    app.get('/view/newthings',function (req,res) {
+        if(!req.session.loginid)
+            res.render('partials/register');
+        else
+            res.render('partials/newthings');
+    });
    	app.get('/view/try',function (req,res){
    		res.render('partials/try');
    	});
@@ -156,6 +162,16 @@
         var r=response;
         my.execute(req,res,sql,data,r);
     });
+     app.post('/data/newthings',function(req,res){
+         var sql="select s.time,s.datetime,s.comments,u.loginid,i.name as item from timemanage.sands as s " +
+             "left join timemanage.items as i on i.iditems=s.item " +
+             "left join timemanage.users as u on s.iduser=u.id where u.loginid in (" +
+             "SELECT distinct u.loginid from timemanage.care as c right join timemanage.users as u on c.careid=u.loginid " +
+             "where c.loginid=? or c.careid=?) and i.name is not null order by s.datetime desc limit 0,20;";
+         var data=[req.session.loginid,req.session.loginid];
+         var r=response;
+         my.execute(req,res,sql,data,r);
+     });
  	
  	//the operations accociating with db update and insert and delete
  	app.post('/add/additem',function(req,res){

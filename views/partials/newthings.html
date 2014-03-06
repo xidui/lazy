@@ -1,0 +1,24 @@
+<div class="container">
+    <div class="row" ng-controller="NewThings">
+        <div class="col-md-8">
+            <div class="panel panel-info alert-dismissable" ng-repeat="thing in things">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-2">
+                            <img data-src="" class="img-thumbnail" src="" style="width: 100px; height: 100px; background-color: #D0D0D0">
+                        </div>
+                        <div class="col-md-10">
+                            <div class="row"><strong><a>{{thing.loginid}}</a></strong>花费了<strong>{{thing.time}}</strong>小时在：</div>
+                            <div class="row">{{thing.comments}}</div>
+                            <div class="row text-right">
+                                {{thing.datetime|date:'yyyy-mm-dd hh:mm:ss'}}  所属 <strong><a>{{thing.item}}</a></strong>
+                            </div>
+                            <div class="row text-right">评论</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
