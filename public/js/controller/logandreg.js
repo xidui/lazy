@@ -72,7 +72,7 @@ lazyctrs.controller('Register', function Register($scope, $http) {
                 var s='恭喜注册成功';
                 if(!data.state)
                     s='抱歉注册失败';
-                if(!date.state){
+                if(data.state){
                     window.location='#/view/manage';
                     window.location.reload();
                 }else{
